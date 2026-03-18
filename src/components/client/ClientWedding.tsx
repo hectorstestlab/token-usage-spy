@@ -1,0 +1,78 @@
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { CalendarDays, MapPin, Users, Clock } from "lucide-react";
+
+const timeline = [
+  { time: "2:00 PM", event: "Guest arrival & welcome drinks", status: "upcoming" },
+  { time: "3:00 PM", event: "Ceremony begins", status: "upcoming" },
+  { time: "3:45 PM", event: "Cocktail hour", status: "upcoming" },
+  { time: "5:00 PM", event: "Reception & dinner", status: "upcoming" },
+  { time: "7:00 PM", event: "First dance & speeches", status: "upcoming" },
+  { time: "8:00 PM", event: "Party & dancing", status: "upcoming" },
+  { time: "11:00 PM", event: "Sparkler send-off", status: "upcoming" },
+];
+
+export default function ClientWedding() {
+  return (
+    <div className="space-y-6">
+      <div>
+        <h1 className="text-2xl font-bold text-foreground">My Wedding</h1>
+        <p className="text-muted-foreground">Your big day details</p>
+      </div>
+
+      <div className="grid sm:grid-cols-3 gap-4">
+        <Card>
+          <CardContent className="p-5 flex items-center gap-3">
+            <CalendarDays className="h-5 w-5 text-primary" />
+            <div>
+              <p className="text-sm text-muted-foreground">Date</p>
+              <p className="font-semibold text-foreground">April 15, 2026</p>
+            </div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent className="p-5 flex items-center gap-3">
+            <MapPin className="h-5 w-5 text-primary" />
+            <div>
+              <p className="text-sm text-muted-foreground">Venue</p>
+              <p className="font-semibold text-foreground">Rose Garden Estate</p>
+            </div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent className="p-5 flex items-center gap-3">
+            <Users className="h-5 w-5 text-primary" />
+            <div>
+              <p className="text-sm text-muted-foreground">Guests</p>
+              <p className="font-semibold text-foreground">150 invited · 128 confirmed</p>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Day-of Timeline</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {timeline.map((t, i) => (
+              <div key={i} className="flex items-start gap-4">
+                <div className="flex flex-col items-center">
+                  <div className="h-3 w-3 rounded-full bg-primary" />
+                  {i < timeline.length - 1 && <div className="w-px h-8 bg-border" />}
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-foreground">{t.event}</p>
+                  <p className="text-xs text-muted-foreground flex items-center gap-1">
+                    <Clock className="h-3 w-3" />{t.time}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
