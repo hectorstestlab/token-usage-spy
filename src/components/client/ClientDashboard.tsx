@@ -1,28 +1,28 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { CalendarDays, CheckCircle2, DollarSign, Heart } from "lucide-react";
+import { CheckCircle2, DollarSign, Heart } from "lucide-react";
 
 const daysUntilWedding = 28;
 const checklistTotal = 24;
 const checklistDone = 17;
 
 const checklist = [
-  { text: "Book venue", done: true },
-  { text: "Hire photographer", done: true },
-  { text: "Choose caterer", done: true },
-  { text: "Send invitations", done: true },
-  { text: "Final dress fitting", done: false },
-  { text: "Confirm seating chart", done: false },
-  { text: "Book honeymoon flights", done: false },
+  { text: "Reservar lugar", done: true },
+  { text: "Contratar fotógrafo", done: true },
+  { text: "Elegir catering", done: true },
+  { text: "Enviar invitaciones", done: true },
+  { text: "Prueba final del vestido", done: false },
+  { text: "Confirmar distribución de mesas", done: false },
+  { text: "Reservar vuelos de luna de miel", done: false },
 ];
 
 export default function ClientDashboard() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-foreground">Your Wedding Dashboard</h1>
-        <p className="text-muted-foreground">Everything at a glance</p>
+        <h1 className="text-2xl font-bold text-foreground">Panel de Tu Boda</h1>
+        <p className="text-muted-foreground">Todo de un vistazo</p>
       </div>
 
       <div className="grid sm:grid-cols-3 gap-4">
@@ -30,14 +30,14 @@ export default function ClientDashboard() {
           <CardContent className="p-6 text-center">
             <Heart className="h-8 w-8 text-primary mx-auto mb-2" />
             <p className="text-4xl font-bold text-foreground">{daysUntilWedding}</p>
-            <p className="text-sm text-muted-foreground">days to go!</p>
+            <p className="text-sm text-muted-foreground">¡días para el gran día!</p>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-6">
             <div className="flex items-center gap-2 mb-2">
               <CheckCircle2 className="h-4 w-4 text-muted-foreground" />
-              <span className="text-sm text-muted-foreground">Checklist Progress</span>
+              <span className="text-sm text-muted-foreground">Progreso del Checklist</span>
             </div>
             <p className="text-2xl font-bold text-foreground">{checklistDone}/{checklistTotal}</p>
             <Progress value={(checklistDone / checklistTotal) * 100} className="h-2 mt-2" />
@@ -47,24 +47,24 @@ export default function ClientDashboard() {
           <CardContent className="p-6">
             <div className="flex items-center gap-2 mb-2">
               <DollarSign className="h-4 w-4 text-muted-foreground" />
-              <span className="text-sm text-muted-foreground">Budget Used</span>
+              <span className="text-sm text-muted-foreground">Presupuesto Usado</span>
             </div>
             <p className="text-2xl font-bold text-foreground">$32,400</p>
-            <p className="text-xs text-muted-foreground">of $45,000 budget</p>
+            <p className="text-xs text-muted-foreground">de $45,000 de presupuesto</p>
           </CardContent>
         </Card>
       </div>
 
       <Card>
         <CardHeader>
-          <CardTitle>Your Checklist</CardTitle>
+          <CardTitle>Tu Checklist</CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
           {checklist.map((item) => (
             <div key={item.text} className="flex items-center gap-3">
               <CheckCircle2 className={`h-5 w-5 ${item.done ? "text-primary" : "text-muted-foreground/30"}`} />
               <span className={`text-sm ${item.done ? "line-through text-muted-foreground" : "text-foreground"}`}>{item.text}</span>
-              {item.done && <Badge variant="secondary" className="text-xs">Done</Badge>}
+              {item.done && <Badge variant="secondary" className="text-xs">Listo</Badge>}
             </div>
           ))}
         </CardContent>

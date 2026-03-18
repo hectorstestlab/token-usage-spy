@@ -1,23 +1,22 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { CalendarDays, MapPin, Users, Clock } from "lucide-react";
 
 const timeline = [
-  { time: "2:00 PM", event: "Guest arrival & welcome drinks", status: "upcoming" },
-  { time: "3:00 PM", event: "Ceremony begins", status: "upcoming" },
-  { time: "3:45 PM", event: "Cocktail hour", status: "upcoming" },
-  { time: "5:00 PM", event: "Reception & dinner", status: "upcoming" },
-  { time: "7:00 PM", event: "First dance & speeches", status: "upcoming" },
-  { time: "8:00 PM", event: "Party & dancing", status: "upcoming" },
-  { time: "11:00 PM", event: "Sparkler send-off", status: "upcoming" },
+  { time: "2:00 PM", event: "Llegada de invitados y cóctel de bienvenida" },
+  { time: "3:00 PM", event: "Comienza la ceremonia" },
+  { time: "3:45 PM", event: "Hora del cóctel" },
+  { time: "5:00 PM", event: "Recepción y cena" },
+  { time: "7:00 PM", event: "Primer baile y discursos" },
+  { time: "8:00 PM", event: "Fiesta y baile" },
+  { time: "11:00 PM", event: "Despedida con bengalas" },
 ];
 
 export default function ClientWedding() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-foreground">My Wedding</h1>
-        <p className="text-muted-foreground">Your big day details</p>
+        <h1 className="text-2xl font-bold text-foreground">Mi Boda</h1>
+        <p className="text-muted-foreground">Los detalles de tu gran día</p>
       </div>
 
       <div className="grid sm:grid-cols-3 gap-4">
@@ -25,8 +24,8 @@ export default function ClientWedding() {
           <CardContent className="p-5 flex items-center gap-3">
             <CalendarDays className="h-5 w-5 text-primary" />
             <div>
-              <p className="text-sm text-muted-foreground">Date</p>
-              <p className="font-semibold text-foreground">April 15, 2026</p>
+              <p className="text-sm text-muted-foreground">Fecha</p>
+              <p className="font-semibold text-foreground">15 de Abril, 2026</p>
             </div>
           </CardContent>
         </Card>
@@ -34,8 +33,8 @@ export default function ClientWedding() {
           <CardContent className="p-5 flex items-center gap-3">
             <MapPin className="h-5 w-5 text-primary" />
             <div>
-              <p className="text-sm text-muted-foreground">Venue</p>
-              <p className="font-semibold text-foreground">Rose Garden Estate</p>
+              <p className="text-sm text-muted-foreground">Lugar</p>
+              <p className="font-semibold text-foreground">Jardín de Rosas</p>
             </div>
           </CardContent>
         </Card>
@@ -43,8 +42,8 @@ export default function ClientWedding() {
           <CardContent className="p-5 flex items-center gap-3">
             <Users className="h-5 w-5 text-primary" />
             <div>
-              <p className="text-sm text-muted-foreground">Guests</p>
-              <p className="font-semibold text-foreground">150 invited · 128 confirmed</p>
+              <p className="text-sm text-muted-foreground">Invitados</p>
+              <p className="font-semibold text-foreground">150 invitados · 128 confirmados</p>
             </div>
           </CardContent>
         </Card>
@@ -52,7 +51,7 @@ export default function ClientWedding() {
 
       <Card>
         <CardHeader>
-          <CardTitle>Day-of Timeline</CardTitle>
+          <CardTitle>Cronograma del Día</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
