@@ -2,19 +2,19 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { MessageCircle } from "lucide-react";
 
 const messages = [
-  { from: "Sarah M.", preview: "Can we move the tasting to next week?", time: "2h ago", unread: true },
-  { from: "Bloom & Petal", preview: "Updated proposal attached for the ceremony arrangement.", time: "5h ago", unread: true },
-  { from: "Emma J.", preview: "We loved the venue! Let's finalize.", time: "1d ago", unread: false },
-  { from: "Capture Moments", preview: "Engagement shoot is confirmed for Saturday.", time: "1d ago", unread: false },
-  { from: "Sophia L.", preview: "Thanks for the timeline update!", time: "2d ago", unread: false },
+  { from: "Sara M.", preview: "¿Podemos mover la degustación a la próxima semana?", time: "Hace 2h", unread: true },
+  { from: "Flores y Pétalos", preview: "Propuesta actualizada adjunta para el arreglo de la ceremonia.", time: "Hace 5h", unread: true },
+  { from: "Emma J.", preview: "¡Nos encantó el lugar! Finalicemos.", time: "Hace 1d", unread: false },
+  { from: "Captura Momentos", preview: "Sesión de compromiso confirmada para el sábado.", time: "Hace 1d", unread: false },
+  { from: "Sofía L.", preview: "¡Gracias por la actualización del cronograma!", time: "Hace 2d", unread: false },
 ];
 
 export default function Messages() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-foreground">Messages</h1>
-        <p className="text-muted-foreground">Your conversations</p>
+        <h1 className="text-2xl font-bold text-foreground">Mensajes</h1>
+        <p className="text-muted-foreground">Tus conversaciones</p>
       </div>
       <Card>
         <CardContent className="p-0 divide-y divide-border">

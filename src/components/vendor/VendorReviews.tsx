@@ -2,19 +2,19 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Star } from "lucide-react";
 
 const reviews = [
-  { name: "Sarah M.", rating: 5, text: "Absolutely incredible! Every photo was a masterpiece. Could not recommend more highly.", date: "Feb 2026" },
-  { name: "Emily R.", rating: 5, text: "Professional, creative, and so easy to work with. Our wedding photos are stunning.", date: "Jan 2026" },
-  { name: "Jessica L.", rating: 4, text: "Great experience overall. Loved the engagement session, wedding day was flawless.", date: "Dec 2025" },
-  { name: "Amanda K.", rating: 5, text: "They captured every moment perfectly. We keep looking at our album over and over!", date: "Nov 2025" },
-  { name: "Rachel T.", rating: 4, text: "Beautiful work. Delivery was a bit slow but the quality made up for it.", date: "Oct 2025" },
+  { name: "Sara M.", rating: 5, text: "¡Absolutamente increíble! Cada foto fue una obra maestra. No podría recomendarlos más.", date: "Feb 2026" },
+  { name: "Emily R.", rating: 5, text: "Profesionales, creativos y muy fáciles de trabajar. Nuestras fotos de boda son impresionantes.", date: "Ene 2026" },
+  { name: "Jessica L.", rating: 4, text: "Gran experiencia en general. Nos encantó la sesión de compromiso, el día de la boda fue impecable.", date: "Dic 2025" },
+  { name: "Amanda K.", rating: 5, text: "Capturaron cada momento perfectamente. ¡No dejamos de ver nuestro álbum una y otra vez!", date: "Nov 2025" },
+  { name: "Raquel T.", rating: 4, text: "Trabajo hermoso. La entrega fue un poco lenta pero la calidad lo compensó.", date: "Oct 2025" },
 ];
 
 export default function VendorReviews() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-foreground">Reviews</h1>
-        <p className="text-muted-foreground">What your clients are saying</p>
+        <h1 className="text-2xl font-bold text-foreground">Reseñas</h1>
+        <p className="text-muted-foreground">Lo que dicen tus clientes</p>
       </div>
       <div className="grid gap-4">
         {reviews.map((r, i) => (

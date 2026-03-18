@@ -40,31 +40,31 @@ interface NavItem {
 }
 
 const plannerNav: NavItem[] = [
-  { title: "Dashboard", url: "/planner/dashboard", icon: LayoutDashboard },
-  { title: "Weddings", url: "/planner/weddings", icon: CalendarDays },
-  { title: "Clients", url: "/planner/clients", icon: Users },
-  { title: "Vendors", url: "/planner/vendors", icon: Store },
-  { title: "Budget", url: "/planner/budget", icon: DollarSign },
-  { title: "Messages", url: "/planner/messages", icon: MessageCircle },
-  { title: "Settings", url: "/planner/settings", icon: Settings },
+  { title: "Panel", url: "/planner/dashboard", icon: LayoutDashboard },
+  { title: "Bodas", url: "/planner/weddings", icon: CalendarDays },
+  { title: "Clientes", url: "/planner/clients", icon: Users },
+  { title: "Proveedores", url: "/planner/vendors", icon: Store },
+  { title: "Presupuesto", url: "/planner/budget", icon: DollarSign },
+  { title: "Mensajes", url: "/planner/messages", icon: MessageCircle },
+  { title: "Configuración", url: "/planner/settings", icon: Settings },
 ];
 
 const clientNav: NavItem[] = [
-  { title: "Dashboard", url: "/client/dashboard", icon: LayoutDashboard },
-  { title: "My Wedding", url: "/client/wedding", icon: CalendarDays },
-  { title: "Vendors", url: "/client/vendors", icon: Store },
-  { title: "Budget", url: "/client/budget", icon: DollarSign },
-  { title: "Messages", url: "/client/messages", icon: MessageCircle },
-  { title: "Settings", url: "/client/settings", icon: Settings },
+  { title: "Panel", url: "/client/dashboard", icon: LayoutDashboard },
+  { title: "Mi Boda", url: "/client/wedding", icon: CalendarDays },
+  { title: "Proveedores", url: "/client/vendors", icon: Store },
+  { title: "Presupuesto", url: "/client/budget", icon: DollarSign },
+  { title: "Mensajes", url: "/client/messages", icon: MessageCircle },
+  { title: "Configuración", url: "/client/settings", icon: Settings },
 ];
 
 const vendorNav: NavItem[] = [
-  { title: "Dashboard", url: "/vendor/dashboard", icon: LayoutDashboard },
-  { title: "Bookings", url: "/vendor/bookings", icon: CalendarCheck },
-  { title: "Services", url: "/vendor/services", icon: ClipboardList },
-  { title: "Reviews", url: "/vendor/reviews", icon: Star },
-  { title: "Messages", url: "/vendor/messages", icon: MessageCircle },
-  { title: "Settings", url: "/vendor/settings", icon: Settings },
+  { title: "Panel", url: "/vendor/dashboard", icon: LayoutDashboard },
+  { title: "Reservas", url: "/vendor/bookings", icon: CalendarCheck },
+  { title: "Servicios", url: "/vendor/services", icon: ClipboardList },
+  { title: "Reseñas", url: "/vendor/reviews", icon: Star },
+  { title: "Mensajes", url: "/vendor/messages", icon: MessageCircle },
+  { title: "Configuración", url: "/vendor/settings", icon: Settings },
 ];
 
 function getNavItems(role: string | null): NavItem[] {
@@ -79,8 +79,8 @@ function getNavItems(role: string | null): NavItem[] {
 function getRoleLabel(role: string | null): string {
   switch (role) {
     case "planner": return "Wedding Planner";
-    case "client": return "Couple";
-    case "vendor": return "Vendor";
+    case "client": return "Pareja";
+    case "vendor": return "Proveedor";
     default: return "";
   }
 }
@@ -131,7 +131,7 @@ function AppSidebar() {
         )}
         <Button variant="ghost" size="sm" className="w-full justify-start gap-2" onClick={handleLogout}>
           <LogOut className="h-4 w-4" />
-          {!collapsed && "Log Out"}
+          {!collapsed && "Cerrar Sesión"}
         </Button>
       </SidebarFooter>
     </Sidebar>

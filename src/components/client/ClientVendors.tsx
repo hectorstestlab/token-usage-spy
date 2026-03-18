@@ -3,28 +3,28 @@ import { Badge } from "@/components/ui/badge";
 import { Star } from "lucide-react";
 
 const booked = [
-  { name: "Bloom & Petal Florists", category: "Florist", rating: 4.9, price: "$3,200", status: "Confirmed" },
-  { name: "Capture Moments Photography", category: "Photographer", rating: 4.8, price: "$5,500", status: "Confirmed" },
-  { name: "Gourmet Celebrations", category: "Caterer", rating: 4.7, price: "$12,000", status: "Deposit Paid" },
+  { name: "Flores y Pétalos", category: "Florista", rating: 4.9, price: "$3,200", status: "Confirmado" },
+  { name: "Captura Momentos Fotografía", category: "Fotógrafo", rating: 4.8, price: "$5,500", status: "Confirmado" },
+  { name: "Celebraciones Gourmet", category: "Catering", rating: 4.7, price: "$12,000", status: "Depósito Pagado" },
 ];
 
 const marketplace = [
-  { name: "Harmony Strings Band", category: "Entertainment", rating: 4.6, price: "From $2,000" },
-  { name: "Sweet Layers Bakery", category: "Cake & Desserts", rating: 4.9, price: "From $800" },
-  { name: "Elegant Drapes & Décor", category: "Décor", rating: 4.5, price: "From $1,500" },
-  { name: "Luxe Limousine", category: "Transportation", rating: 4.4, price: "From $600" },
+  { name: "Cuerdas Armónicas", category: "Entretenimiento", rating: 4.6, price: "Desde $2,000" },
+  { name: "Dulces Capas Pastelería", category: "Pastel y Postres", rating: 4.9, price: "Desde $800" },
+  { name: "Decoración Elegante", category: "Decoración", rating: 4.5, price: "Desde $1,500" },
+  { name: "Limusinas de Lujo", category: "Transporte", rating: 4.4, price: "Desde $600" },
 ];
 
 export default function ClientVendors() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-bold text-foreground">Vendors</h1>
-        <p className="text-muted-foreground">Your booked vendors and marketplace</p>
+        <h1 className="text-2xl font-bold text-foreground">Proveedores</h1>
+        <p className="text-muted-foreground">Tus proveedores reservados y marketplace</p>
       </div>
 
       <div>
-        <h2 className="text-lg font-semibold text-foreground mb-4">Booked Vendors</h2>
+        <h2 className="text-lg font-semibold text-foreground mb-4">Proveedores Reservados</h2>
         <div className="grid gap-4">
           {booked.map((v) => (
             <Card key={v.name}>
@@ -42,7 +42,7 @@ export default function ClientVendors() {
       </div>
 
       <div>
-        <h2 className="text-lg font-semibold text-foreground mb-4">Browse Marketplace</h2>
+        <h2 className="text-lg font-semibold text-foreground mb-4">Explorar Marketplace</h2>
         <div className="grid sm:grid-cols-2 gap-4">
           {marketplace.map((v) => (
             <Card key={v.name} className="cursor-pointer hover:shadow-md transition-shadow">

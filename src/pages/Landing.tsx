@@ -7,52 +7,52 @@ import { CalendarDays, DollarSign, Store, MessageCircle, Check, Heart, Sparkles 
 const features = [
   {
     icon: CalendarDays,
-    title: "Event Management",
-    description: "Create timelines, set milestones, and track every detail from engagement to the big day.",
+    title: "Gestión de Eventos",
+    description: "Crea cronogramas, establece hitos y controla cada detalle desde el compromiso hasta el gran día.",
   },
   {
     icon: DollarSign,
-    title: "Budget Tracking",
-    description: "Real-time budget management with category breakdowns, expense tracking, and payment schedules.",
+    title: "Control de Presupuesto",
+    description: "Gestión de presupuesto en tiempo real con desglose por categorías, seguimiento de gastos y calendarios de pago.",
   },
   {
     icon: Store,
-    title: "Vendor Marketplace",
-    description: "Browse, compare, and book top-rated vendors — photographers, caterers, florists, and more.",
+    title: "Marketplace de Proveedores",
+    description: "Busca, compara y reserva proveedores top — fotógrafos, catering, floristas y más.",
   },
   {
     icon: MessageCircle,
-    title: "Seamless Communication",
-    description: "Centralized messaging between planners, couples, and vendors. Never miss an update.",
+    title: "Comunicación Fluida",
+    description: "Mensajería centralizada entre planificadores, parejas y proveedores. Nunca pierdas una actualización.",
   },
 ];
 
 const pricing = [
   {
-    name: "Starter",
+    name: "Inicio",
     price: "$0",
-    period: "/month",
-    description: "For couples planning on their own",
-    features: ["1 wedding", "Basic timeline", "Up to 3 vendors", "Email support"],
-    cta: "Get Started Free",
+    period: "/mes",
+    description: "Para parejas que planifican por su cuenta",
+    features: ["1 boda", "Cronograma básico", "Hasta 3 proveedores", "Soporte por email"],
+    cta: "Comenzar Gratis",
     highlighted: false,
   },
   {
-    name: "Professional",
+    name: "Profesional",
     price: "$49",
-    period: "/month",
-    description: "For wedding planners & coordinators",
-    features: ["Unlimited weddings", "Full budget tools", "Vendor marketplace", "Client portal", "Priority support"],
-    cta: "Start Free Trial",
+    period: "/mes",
+    description: "Para wedding planners y coordinadores",
+    features: ["Bodas ilimitadas", "Herramientas de presupuesto", "Marketplace de proveedores", "Portal de clientes", "Soporte prioritario"],
+    cta: "Prueba Gratuita",
     highlighted: true,
   },
   {
-    name: "Enterprise",
+    name: "Empresa",
     price: "$149",
-    period: "/month",
-    description: "For agencies & large teams",
-    features: ["Everything in Pro", "Team collaboration", "Custom branding", "API access", "Dedicated manager"],
-    cta: "Contact Sales",
+    period: "/mes",
+    description: "Para agencias y equipos grandes",
+    features: ["Todo en Pro", "Colaboración en equipo", "Marca personalizada", "Acceso API", "Gerente dedicado"],
+    cta: "Contactar Ventas",
     highlighted: false,
   },
 ];
@@ -68,15 +68,15 @@ export default function Landing() {
             <span className="text-xl font-bold text-foreground tracking-tight">WedPlan</span>
           </div>
           <div className="hidden md:flex items-center gap-8 text-sm text-muted-foreground">
-            <a href="#features" className="hover:text-foreground transition-colors">Features</a>
-            <a href="#pricing" className="hover:text-foreground transition-colors">Pricing</a>
+            <a href="#features" className="hover:text-foreground transition-colors">Características</a>
+            <a href="#pricing" className="hover:text-foreground transition-colors">Precios</a>
           </div>
           <div className="flex items-center gap-3">
             <Link to="/login">
-              <Button variant="ghost" size="sm">Log In</Button>
+              <Button variant="ghost" size="sm">Iniciar Sesión</Button>
             </Link>
             <Link to="/login">
-              <Button size="sm">Get Started</Button>
+              <Button size="sm">Comenzar</Button>
             </Link>
           </div>
         </div>
@@ -89,24 +89,24 @@ export default function Landing() {
           <div className="max-w-3xl mx-auto text-center space-y-6">
             <Badge variant="secondary" className="text-sm px-4 py-1">
               <Sparkles className="h-3.5 w-3.5 mr-1.5" />
-              Trusted by 2,000+ wedding professionals
+              Más de 2,000 profesionales confían en nosotros
             </Badge>
             <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-foreground leading-tight">
-              Plan Perfect Weddings,{" "}
-              <span className="text-primary">Together</span>
+              Planifica Bodas Perfectas,{" "}
+              <span className="text-primary">Juntos</span>
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-              The all-in-one platform connecting wedding planners, couples, and vendors.
-              Manage timelines, budgets, and communication in one beautiful workspace.
+              La plataforma todo-en-uno que conecta wedding planners, parejas y proveedores.
+              Gestiona cronogramas, presupuestos y comunicación en un solo lugar.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
               <Link to="/login">
                 <Button size="lg" className="text-base px-8">
-                  Get Started Free
+                  Comenzar Gratis
                 </Button>
               </Link>
               <Button size="lg" variant="outline" className="text-base px-8">
-                Book a Demo
+                Agendar Demo
               </Button>
             </div>
           </div>
@@ -118,10 +118,10 @@ export default function Landing() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Everything You Need
+              Todo lo que Necesitas
             </h2>
             <p className="text-muted-foreground text-lg max-w-xl mx-auto">
-              Powerful tools designed for modern wedding planning.
+              Herramientas poderosas diseñadas para la planificación moderna de bodas.
             </p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
@@ -147,10 +147,10 @@ export default function Landing() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Simple, Transparent Pricing
+              Precios Simples y Transparentes
             </h2>
             <p className="text-muted-foreground text-lg">
-              Start free. Upgrade when you're ready.
+              Comienza gratis. Mejora cuando estés listo.
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
@@ -160,7 +160,7 @@ export default function Landing() {
                 className={`relative ${plan.highlighted ? "border-primary shadow-lg scale-105" : "border-border/50"}`}
               >
                 {plan.highlighted && (
-                  <Badge className="absolute -top-3 left-1/2 -translate-x-1/2">Most Popular</Badge>
+                  <Badge className="absolute -top-3 left-1/2 -translate-x-1/2">Más Popular</Badge>
                 )}
                 <CardHeader className="text-center pb-2">
                   <CardTitle className="text-xl">{plan.name}</CardTitle>
@@ -202,7 +202,7 @@ export default function Landing() {
             <span className="font-semibold text-foreground">WedPlan</span>
           </div>
           <p className="text-sm text-muted-foreground">
-            © 2026 WedPlan. All rights reserved.
+            © 2026 WedPlan. Todos los derechos reservados.
           </p>
         </div>
       </footer>

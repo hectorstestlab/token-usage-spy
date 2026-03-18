@@ -8,21 +8,21 @@ const roles: { role: UserRole; label: string; description: string; icon: typeof 
   {
     role: "planner",
     label: "Wedding Planner",
-    description: "Manage weddings, clients, vendors, and budgets",
+    description: "Gestiona bodas, clientes, proveedores y presupuestos",
     icon: ClipboardList,
     path: "/planner/dashboard",
   },
   {
     role: "client",
-    label: "Couple / Client",
-    description: "Plan your wedding, track progress, and connect with vendors",
+    label: "Pareja / Cliente",
+    description: "Planifica tu boda, sigue el progreso y conecta con proveedores",
     icon: Users,
     path: "/client/dashboard",
   },
   {
     role: "vendor",
-    label: "Vendor",
-    description: "Manage bookings, services, and communicate with clients",
+    label: "Proveedor",
+    description: "Gestiona reservas, servicios y comunícate con clientes",
     icon: Store,
     path: "/vendor/dashboard",
   },
@@ -42,8 +42,8 @@ export default function Login() {
       <div className="w-full max-w-2xl space-y-8">
         <div className="text-center space-y-2">
           <Heart className="h-10 w-10 text-primary fill-primary mx-auto" />
-          <h1 className="text-3xl font-bold text-foreground">Welcome to WedPlan</h1>
-          <p className="text-muted-foreground">Choose how you'd like to continue</p>
+          <h1 className="text-3xl font-bold text-foreground">Bienvenido a WedPlan</h1>
+          <p className="text-muted-foreground">Elige cómo deseas continuar</p>
         </div>
 
         <div className="grid gap-4">
@@ -62,7 +62,7 @@ export default function Login() {
                   <p className="text-sm text-muted-foreground">{r.description}</p>
                 </div>
                 <Button variant="ghost" size="sm" className="shrink-0">
-                  Enter →
+                  Entrar →
                 </Button>
               </CardContent>
             </Card>
