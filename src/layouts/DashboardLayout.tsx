@@ -45,6 +45,7 @@ const plannerNav: NavItem[] = [
   { title: "Bodas", url: "/planner/weddings", icon: CalendarDays },
   { title: "Clientes", url: "/planner/clients", icon: Users },
   { title: "Proveedores", url: "/planner/vendors", icon: Store },
+  { title: "Marketplace", url: "/planner/marketplace", icon: ShoppingBag },
   { title: "Presupuesto", url: "/planner/budget", icon: DollarSign },
   { title: "Mensajes", url: "/planner/messages", icon: MessageCircle },
   { title: "Configuración", url: "/planner/settings", icon: Settings },
