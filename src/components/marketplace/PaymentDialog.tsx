@@ -9,11 +9,13 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { CreditCard, Check, Plus } from "lucide-react";
+import { CreditCard, Check, Plus, Users } from "lucide-react";
 import type { MarketplaceListing } from "@/types/marketplace";
 import type { PaymentMethod } from "@/types/payments";
 import { mockPaymentMethods } from "@/data/paymentsData";
+import { mockSharedMethods } from "@/data/paymentApprovalsData";
 import PaymentMethodForm from "@/components/shared/PaymentMethodForm";
+import { useUser } from "@/contexts/UserContext";
 import { toast } from "sonner";
 
 interface PaymentDialogProps {
@@ -28,14 +30,20 @@ interface PaymentDialogProps {
 type Step = "summary" | "method" | "new-card" | "confirm";
 
 export default function PaymentDialog({ listing, open, onOpenChange, weddingName, date, onSuccess }: PaymentDialogProps) {
+  const { role } = useUser();
   const [step, setStep] = useState<Step>("summary");
   const [methods, setMethods] = useState<PaymentMethod[]>(mockPaymentMethods);
   const [selectedMethod, setSelectedMethod] = useState<string>(mockPaymentMethods[0]?.id ?? "");
+  const [isClientCard, setIsClientCard] = useState(false);
   const [processing, setProcessing] = useState(false);
+
+  const clientCards = mockSharedMethods.filter((m) => m.approvedForPlanner);
 
   if (!listing) return null;
 
-  const selected = methods.find((m) => m.id === selectedMethod);
+  const selected = isClientCard
+    ? clientCards.find((m) => m.id === selectedMethod)
+    : methods.find((m) => m.id === selectedMethod);
 
   const cardIcon = (type: string) => {
     switch (type) {
@@ -50,8 +58,15 @@ export default function PaymentDialog({ listing, open, onOpenChange, weddingName
     setProcessing(true);
     setTimeout(() => {
       setProcessing(false);
-      toast.success("¡Pago procesado exitosamente!", { description: `${listing.title} — ${listing.price}` });
+      if (isClientCard) {
+        toast.success("Solicitud de pago enviada al cliente", {
+          description: `${listing.title} — ${listing.price}. Pendiente de aprobación.`,
+        });
+      } else {
+        toast.success("¡Pago procesado exitosamente!", { description: `${listing.title} — ${listing.price}` });
+      }
       setStep("summary");
+      setIsClientCard(false);
       onOpenChange(false);
       onSuccess();
     }, 1500);
@@ -60,12 +75,23 @@ export default function PaymentDialog({ listing, open, onOpenChange, weddingName
   const handleAddCard = (method: PaymentMethod) => {
     setMethods((prev) => [...prev, method]);
     setSelectedMethod(method.id);
+    setIsClientCard(false);
     toast.success("Tarjeta agregada");
     setStep("method");
   };
 
+  const handleSelectOwn = (id: string) => {
+    setSelectedMethod(id);
+    setIsClientCard(false);
+  };
+
+  const handleSelectClient = (id: string) => {
+    setSelectedMethod(id);
+    setIsClientCard(true);
+  };
+
   const handleClose = (v: boolean) => {
-    if (!v) setStep("summary");
+    if (!v) { setStep("summary"); setIsClientCard(false); }
     onOpenChange(v);
   };
 
@@ -77,13 +103,13 @@ export default function PaymentDialog({ listing, open, onOpenChange, weddingName
             {step === "summary" && "Resumen del Pago"}
             {step === "method" && "Método de Pago"}
             {step === "new-card" && "Agregar Tarjeta"}
-            {step === "confirm" && "Confirmar Pago"}
+            {step === "confirm" && (isClientCard ? "Solicitar Aprobación" : "Confirmar Pago")}
           </DialogTitle>
           <DialogDescription>
             {step === "summary" && "Revisa los detalles antes de continuar"}
             {step === "method" && "Selecciona o agrega un método de pago"}
             {step === "new-card" && "Ingresa los datos de tu tarjeta"}
-            {step === "confirm" && "Verifica y confirma tu pago"}
+            {step === "confirm" && (isClientCard ? "El cliente deberá aprobar este pago" : "Verifica y confirma tu pago")}
           </DialogDescription>
         </DialogHeader>
 
@@ -114,12 +140,14 @@ export default function PaymentDialog({ listing, open, onOpenChange, weddingName
 
         {step === "method" && (
           <div className="space-y-3 py-2">
+            {/* Own cards */}
+            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Tus Tarjetas</p>
             {methods.map((m) => (
               <button
                 key={m.id}
-                onClick={() => setSelectedMethod(m.id)}
+                onClick={() => handleSelectOwn(m.id)}
                 className={`w-full flex items-center gap-3 p-3 rounded-lg border transition-colors ${
-                  selectedMethod === m.id ? "border-primary bg-primary/5" : "border-border hover:bg-muted/50"
+                  selectedMethod === m.id && !isClientCard ? "border-primary bg-primary/5" : "border-border hover:bg-muted/50"
                 }`}
               >
                 <CreditCard className="h-5 w-5 text-muted-foreground shrink-0" />
@@ -127,10 +155,37 @@ export default function PaymentDialog({ listing, open, onOpenChange, weddingName
                   <div className="text-sm font-medium text-foreground">{cardIcon(m.type)} •••• {m.last4}</div>
                   <div className="text-xs text-muted-foreground">{m.holderName} · {m.expiryMonth}/{m.expiryYear}</div>
                 </div>
-                {selectedMethod === m.id && <Check className="h-4 w-4 text-primary" />}
+                {selectedMethod === m.id && !isClientCard && <Check className="h-4 w-4 text-primary" />}
                 {m.isDefault && <Badge variant="secondary" className="text-xs">Principal</Badge>}
               </button>
             ))}
+
+            {/* Client cards - only for planners */}
+            {role === "planner" && clientCards.length > 0 && (
+              <>
+                <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mt-4 flex items-center gap-1">
+                  <Users className="h-3 w-3" /> Tarjetas de Clientes
+                </p>
+                {clientCards.map((m) => (
+                  <button
+                    key={m.id}
+                    onClick={() => handleSelectClient(m.id)}
+                    className={`w-full flex items-center gap-3 p-3 rounded-lg border transition-colors ${
+                      selectedMethod === m.id && isClientCard ? "border-primary bg-primary/5" : "border-border hover:bg-muted/50"
+                    }`}
+                  >
+                    <CreditCard className="h-5 w-5 text-muted-foreground shrink-0" />
+                    <div className="flex-1 text-left">
+                      <div className="text-sm font-medium text-foreground">{cardIcon(m.type)} •••• {m.last4}</div>
+                      <div className="text-xs text-muted-foreground">{m.ownerName} · Requiere aprobación</div>
+                    </div>
+                    {selectedMethod === m.id && isClientCard && <Check className="h-4 w-4 text-primary" />}
+                    <Badge variant="outline" className="text-xs">Cliente</Badge>
+                  </button>
+                ))}
+              </>
+            )}
+
             <button
               onClick={() => setStep("new-card")}
               className="w-full flex items-center gap-3 p-3 rounded-lg border border-dashed border-border hover:bg-muted/50 transition-colors"
@@ -156,14 +211,29 @@ export default function PaymentDialog({ listing, open, onOpenChange, weddingName
                 <span className="text-muted-foreground">Pagar con</span>
                 <span className="text-foreground">{cardIcon(selected.type)} •••• {selected.last4}</span>
               </div>
+              {isClientCard && (
+                <div className="flex justify-between text-sm">
+                  <span className="text-muted-foreground">Titular</span>
+                  <span className="text-foreground">{(selected as any).ownerName}</span>
+                </div>
+              )}
               <div className="border-t pt-2 flex justify-between">
                 <span className="font-semibold text-foreground">Total</span>
                 <span className="font-bold text-primary">{listing.price}</span>
               </div>
             </div>
-            <p className="text-xs text-muted-foreground text-center">
-              Al confirmar, aceptas los términos de servicio. Este es un pago simulado.
-            </p>
+            {isClientCard ? (
+              <div className="bg-primary/5 border border-primary/20 rounded-lg p-3">
+                <p className="text-sm text-foreground font-medium">⚠️ Requiere aprobación del cliente</p>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Se enviará una solicitud al cliente para aprobar este pago. El servicio se confirmará cuando el cliente acepte.
+                </p>
+              </div>
+            ) : (
+              <p className="text-xs text-muted-foreground text-center">
+                Al confirmar, aceptas los términos de servicio. Este es un pago simulado.
+              </p>
+            )}
           </div>
         )}
 
@@ -185,7 +255,7 @@ export default function PaymentDialog({ listing, open, onOpenChange, weddingName
               <>
                 <Button variant="outline" onClick={() => setStep("method")}>Atrás</Button>
                 <Button onClick={handleConfirm} disabled={processing}>
-                  {processing ? "Procesando..." : "Confirmar Pago"}
+                  {processing ? "Procesando..." : isClientCard ? "Enviar Solicitud" : "Confirmar Pago"}
                 </Button>
               </>
             )}

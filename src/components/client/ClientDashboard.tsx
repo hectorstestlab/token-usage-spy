@@ -1,7 +1,10 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { CheckCircle2, DollarSign, Heart } from "lucide-react";
+import { CheckCircle2, DollarSign, Heart, AlertTriangle } from "lucide-react";
+import { Link } from "react-router-dom";
+import { mockApprovalRequests } from "@/data/paymentApprovalsData";
 
 const daysUntilWedding = 28;
 const checklistTotal = 24;
@@ -18,12 +21,31 @@ const checklist = [
 ];
 
 export default function ClientDashboard() {
+  const pendingApprovals = mockApprovalRequests.filter((r) => r.status === "pendiente");
+
   return (
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold text-foreground">Panel de Tu Boda</h1>
         <p className="text-muted-foreground">Todo de un vistazo</p>
       </div>
+
+      {pendingApprovals.length > 0 && (
+        <Card className="border-primary/30 bg-primary/5">
+          <CardContent className="p-4 flex items-center gap-3">
+            <AlertTriangle className="h-6 w-6 text-primary shrink-0" />
+            <div className="flex-1">
+              <p className="text-sm font-medium text-foreground">
+                Tienes {pendingApprovals.length} solicitud(es) de pago pendiente(s)
+              </p>
+              <p className="text-xs text-muted-foreground">Tu planner necesita tu aprobación para procesar pagos</p>
+            </div>
+            <Button size="sm" asChild>
+              <Link to="/client/approvals">Ver solicitudes</Link>
+            </Button>
+          </CardContent>
+        </Card>
+      )}
 
       <div className="grid sm:grid-cols-3 gap-4">
         <Card className="bg-gradient-to-br from-primary/5 to-primary/10 border-primary/20">
