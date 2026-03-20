@@ -34,6 +34,7 @@ import VendorMarketplace from "./components/vendor/VendorMarketplace";
 // Shared pages
 import Messages from "./components/shared/Messages";
 import SettingsPage from "./components/shared/SettingsPage";
+import PaymentSettings from "./components/shared/PaymentSettings";
 
 const queryClient = new QueryClient();
 
