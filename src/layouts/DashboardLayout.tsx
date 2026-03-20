@@ -49,6 +49,7 @@ const plannerNav: NavItem[] = [
   { title: "Marketplace", url: "/planner/marketplace", icon: ShoppingBag },
   { title: "Presupuesto", url: "/planner/budget", icon: DollarSign },
   { title: "Mensajes", url: "/planner/messages", icon: MessageCircle },
+  { title: "Pagos", url: "/planner/payments", icon: CreditCard },
   { title: "Configuración", url: "/planner/settings", icon: Settings },
 ];
 
