@@ -15,18 +15,21 @@ import PlannerWeddings from "./components/planner/PlannerWeddings";
 import PlannerClients from "./components/planner/PlannerClients";
 import PlannerVendors from "./components/planner/PlannerVendors";
 import PlannerBudget from "./components/planner/PlannerBudget";
+import PlannerMarketplace from "./components/planner/PlannerMarketplace";
 
 // Client pages
 import ClientDashboard from "./components/client/ClientDashboard";
 import ClientWedding from "./components/client/ClientWedding";
 import ClientVendors from "./components/client/ClientVendors";
 import ClientBudget from "./components/client/ClientBudget";
+import ClientMarketplace from "./components/client/ClientMarketplace";
 
 // Vendor pages
 import VendorDashboard from "./components/vendor/VendorDashboard";
 import VendorBookings from "./components/vendor/VendorBookings";
 import VendorServices from "./components/vendor/VendorServices";
 import VendorReviews from "./components/vendor/VendorReviews";
+import VendorMarketplace from "./components/vendor/VendorMarketplace";
 
 // Shared pages
 import Messages from "./components/shared/Messages";
@@ -51,6 +54,7 @@ const App = () => (
               <Route path="weddings" element={<PlannerWeddings />} />
               <Route path="clients" element={<PlannerClients />} />
               <Route path="vendors" element={<PlannerVendors />} />
+              <Route path="marketplace" element={<PlannerMarketplace />} />
               <Route path="budget" element={<PlannerBudget />} />
               <Route path="messages" element={<Messages />} />
               <Route path="settings" element={<SettingsPage />} />
@@ -61,6 +65,7 @@ const App = () => (
               <Route path="dashboard" element={<ClientDashboard />} />
               <Route path="wedding" element={<ClientWedding />} />
               <Route path="vendors" element={<ClientVendors />} />
+              <Route path="marketplace" element={<ClientMarketplace />} />
               <Route path="budget" element={<ClientBudget />} />
               <Route path="messages" element={<Messages />} />
               <Route path="settings" element={<SettingsPage />} />
@@ -72,6 +77,7 @@ const App = () => (
               <Route path="bookings" element={<VendorBookings />} />
               <Route path="services" element={<VendorServices />} />
               <Route path="reviews" element={<VendorReviews />} />
+              <Route path="marketplace" element={<VendorMarketplace />} />
               <Route path="messages" element={<Messages />} />
               <Route path="settings" element={<SettingsPage />} />
             </Route>

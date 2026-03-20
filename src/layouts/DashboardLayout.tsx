@@ -30,6 +30,7 @@ import {
   Star,
   ClipboardList,
   CalendarCheck,
+  ShoppingBag,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
@@ -44,6 +45,7 @@ const plannerNav: NavItem[] = [
   { title: "Bodas", url: "/planner/weddings", icon: CalendarDays },
   { title: "Clientes", url: "/planner/clients", icon: Users },
   { title: "Proveedores", url: "/planner/vendors", icon: Store },
+  { title: "Marketplace", url: "/planner/marketplace", icon: ShoppingBag },
   { title: "Presupuesto", url: "/planner/budget", icon: DollarSign },
   { title: "Mensajes", url: "/planner/messages", icon: MessageCircle },
   { title: "Configuración", url: "/planner/settings", icon: Settings },
@@ -53,6 +55,7 @@ const clientNav: NavItem[] = [
   { title: "Panel", url: "/client/dashboard", icon: LayoutDashboard },
   { title: "Mi Boda", url: "/client/wedding", icon: CalendarDays },
   { title: "Proveedores", url: "/client/vendors", icon: Store },
+  { title: "Marketplace", url: "/client/marketplace", icon: ShoppingBag },
   { title: "Presupuesto", url: "/client/budget", icon: DollarSign },
   { title: "Mensajes", url: "/client/messages", icon: MessageCircle },
   { title: "Configuración", url: "/client/settings", icon: Settings },
@@ -62,6 +65,7 @@ const vendorNav: NavItem[] = [
   { title: "Panel", url: "/vendor/dashboard", icon: LayoutDashboard },
   { title: "Reservas", url: "/vendor/bookings", icon: CalendarCheck },
   { title: "Servicios", url: "/vendor/services", icon: ClipboardList },
+  { title: "Marketplace", url: "/vendor/marketplace", icon: ShoppingBag },
   { title: "Reseñas", url: "/vendor/reviews", icon: Star },
   { title: "Mensajes", url: "/vendor/messages", icon: MessageCircle },
   { title: "Configuración", url: "/vendor/settings", icon: Settings },
