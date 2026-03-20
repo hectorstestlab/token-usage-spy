@@ -60,6 +60,7 @@ const clientNav: NavItem[] = [
   { title: "Marketplace", url: "/client/marketplace", icon: ShoppingBag },
   { title: "Presupuesto", url: "/client/budget", icon: DollarSign },
   { title: "Mensajes", url: "/client/messages", icon: MessageCircle },
+  { title: "Aprobaciones", url: "/client/approvals", icon: ShieldCheck },
   { title: "Pagos", url: "/client/payments", icon: CreditCard },
   { title: "Configuración", url: "/client/settings", icon: Settings },
 ];
