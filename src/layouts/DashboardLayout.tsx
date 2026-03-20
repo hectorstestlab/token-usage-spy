@@ -32,6 +32,7 @@ import {
   ClipboardList,
   CalendarCheck,
   ShoppingBag,
+  ShieldCheck,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
