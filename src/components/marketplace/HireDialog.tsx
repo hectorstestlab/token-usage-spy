@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import type { MarketplaceListing } from "@/types/marketplace";
+import PaymentDialog from "@/components/marketplace/PaymentDialog";
 import { toast } from "sonner";
 
 interface HireDialogProps {
@@ -26,6 +27,7 @@ export default function HireDialog({ listing, open, onOpenChange, hiredBy }: Hir
   const [date, setDate] = useState("");
   const [location, setLocation] = useState("");
   const [notes, setNotes] = useState("");
+  const [showPayment, setShowPayment] = useState(false);
 
   if (!listing) return null;
 
@@ -34,49 +36,72 @@ export default function HireDialog({ listing, open, onOpenChange, hiredBy }: Hir
       toast.error("Completa los campos obligatorios");
       return;
     }
-    toast.success(`Solicitud enviada a ${listing.vendorName}`);
+    // Instead of finishing, open payment dialog
+    onOpenChange(false);
+    setShowPayment(true);
+  };
+
+  const handlePaymentSuccess = () => {
+    toast.success(`Servicio contratado: ${listing.title}`);
     if (hiredBy === "client") {
       toast.info("Se notificó a tu wedding planner sobre esta contratación");
     }
-    onOpenChange(false);
+    setShowPayment(false);
     setWeddingName("");
     setDate("");
     setLocation("");
     setNotes("");
   };
 
+  const handlePaymentClose = (v: boolean) => {
+    if (!v) {
+      setShowPayment(false);
+    }
+  };
+
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle>Contratar: {listing.title}</DialogTitle>
-          <DialogDescription>{listing.vendorName} · {listing.price}</DialogDescription>
-        </DialogHeader>
+    <>
+      <Dialog open={open} onOpenChange={onOpenChange}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Contratar: {listing.title}</DialogTitle>
+            <DialogDescription>{listing.vendorName} · {listing.price}</DialogDescription>
+          </DialogHeader>
 
-        <div className="space-y-4 py-2">
-          <div className="space-y-2">
-            <Label htmlFor="wedding">Nombre de la boda *</Label>
-            <Input id="wedding" value={weddingName} onChange={(e) => setWeddingName(e.target.value)} placeholder="Boda Sara & Miguel" />
+          <div className="space-y-4 py-2">
+            <div className="space-y-2">
+              <Label htmlFor="wedding">Nombre de la boda *</Label>
+              <Input id="wedding" value={weddingName} onChange={(e) => setWeddingName(e.target.value)} placeholder="Boda Sara & Miguel" />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="date">Fecha del evento *</Label>
+              <Input id="date" type="date" value={date} onChange={(e) => setDate(e.target.value)} />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="location">Ubicación</Label>
+              <Input id="location" value={location} onChange={(e) => setLocation(e.target.value)} placeholder="Venue o dirección" />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="notes">Notas adicionales</Label>
+              <Textarea id="notes" value={notes} onChange={(e) => setNotes(e.target.value)} placeholder="Detalles, preferencias..." rows={3} />
+            </div>
           </div>
-          <div className="space-y-2">
-            <Label htmlFor="date">Fecha del evento *</Label>
-            <Input id="date" type="date" value={date} onChange={(e) => setDate(e.target.value)} />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="location">Ubicación</Label>
-            <Input id="location" value={location} onChange={(e) => setLocation(e.target.value)} placeholder="Venue o dirección" />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="notes">Notas adicionales</Label>
-            <Textarea id="notes" value={notes} onChange={(e) => setNotes(e.target.value)} placeholder="Detalles, preferencias..." rows={3} />
-          </div>
-        </div>
 
-        <DialogFooter>
-          <Button variant="outline" onClick={() => onOpenChange(false)}>Cancelar</Button>
-          <Button onClick={handleSubmit}>Enviar Solicitud</Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => onOpenChange(false)}>Cancelar</Button>
+            <Button onClick={handleSubmit}>Continuar al Pago</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <PaymentDialog
+        listing={listing}
+        open={showPayment}
+        onOpenChange={handlePaymentClose}
+        weddingName={weddingName}
+        date={date}
+        onSuccess={handlePaymentSuccess}
+      />
+    </>
   );
 }

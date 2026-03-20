@@ -26,6 +26,7 @@ import {
   DollarSign,
   MessageCircle,
   Settings,
+  CreditCard,
   LogOut,
   Star,
   ClipboardList,
@@ -48,6 +49,7 @@ const plannerNav: NavItem[] = [
   { title: "Marketplace", url: "/planner/marketplace", icon: ShoppingBag },
   { title: "Presupuesto", url: "/planner/budget", icon: DollarSign },
   { title: "Mensajes", url: "/planner/messages", icon: MessageCircle },
+  { title: "Pagos", url: "/planner/payments", icon: CreditCard },
   { title: "Configuración", url: "/planner/settings", icon: Settings },
 ];
 
@@ -58,6 +60,7 @@ const clientNav: NavItem[] = [
   { title: "Marketplace", url: "/client/marketplace", icon: ShoppingBag },
   { title: "Presupuesto", url: "/client/budget", icon: DollarSign },
   { title: "Mensajes", url: "/client/messages", icon: MessageCircle },
+  { title: "Pagos", url: "/client/payments", icon: CreditCard },
   { title: "Configuración", url: "/client/settings", icon: Settings },
 ];
 
@@ -68,6 +71,7 @@ const vendorNav: NavItem[] = [
   { title: "Marketplace", url: "/vendor/marketplace", icon: ShoppingBag },
   { title: "Reseñas", url: "/vendor/reviews", icon: Star },
   { title: "Mensajes", url: "/vendor/messages", icon: MessageCircle },
+  { title: "Pagos", url: "/vendor/payments", icon: CreditCard },
   { title: "Configuración", url: "/vendor/settings", icon: Settings },
 ];
 
