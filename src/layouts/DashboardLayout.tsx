@@ -65,6 +65,7 @@ const vendorNav: NavItem[] = [
   { title: "Panel", url: "/vendor/dashboard", icon: LayoutDashboard },
   { title: "Reservas", url: "/vendor/bookings", icon: CalendarCheck },
   { title: "Servicios", url: "/vendor/services", icon: ClipboardList },
+  { title: "Marketplace", url: "/vendor/marketplace", icon: ShoppingBag },
   { title: "Reseñas", url: "/vendor/reviews", icon: Star },
   { title: "Mensajes", url: "/vendor/messages", icon: MessageCircle },
   { title: "Configuración", url: "/vendor/settings", icon: Settings },
