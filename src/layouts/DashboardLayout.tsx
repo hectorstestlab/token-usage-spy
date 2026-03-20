@@ -30,6 +30,7 @@ import {
   Star,
   ClipboardList,
   CalendarCheck,
+  ShoppingBag,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
