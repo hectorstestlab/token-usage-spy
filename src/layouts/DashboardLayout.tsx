@@ -55,6 +55,7 @@ const clientNav: NavItem[] = [
   { title: "Panel", url: "/client/dashboard", icon: LayoutDashboard },
   { title: "Mi Boda", url: "/client/wedding", icon: CalendarDays },
   { title: "Proveedores", url: "/client/vendors", icon: Store },
+  { title: "Marketplace", url: "/client/marketplace", icon: ShoppingBag },
   { title: "Presupuesto", url: "/client/budget", icon: DollarSign },
   { title: "Mensajes", url: "/client/messages", icon: MessageCircle },
   { title: "Configuración", url: "/client/settings", icon: Settings },
