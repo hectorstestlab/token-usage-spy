@@ -1,7 +1,10 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { CheckCircle2, DollarSign, Heart } from "lucide-react";
+import { CheckCircle2, DollarSign, Heart, AlertTriangle } from "lucide-react";
+import { Link } from "react-router-dom";
+import { mockApprovalRequests } from "@/data/paymentApprovalsData";
 
 const daysUntilWedding = 28;
 const checklistTotal = 24;
