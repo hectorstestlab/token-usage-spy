@@ -54,6 +54,7 @@ const App = () => (
               <Route path="weddings" element={<PlannerWeddings />} />
               <Route path="clients" element={<PlannerClients />} />
               <Route path="vendors" element={<PlannerVendors />} />
+              <Route path="marketplace" element={<PlannerMarketplace />} />
               <Route path="budget" element={<PlannerBudget />} />
               <Route path="messages" element={<Messages />} />
               <Route path="settings" element={<SettingsPage />} />
