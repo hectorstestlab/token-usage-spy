@@ -22,6 +22,7 @@ import ClientDashboard from "./components/client/ClientDashboard";
 import ClientWedding from "./components/client/ClientWedding";
 import ClientVendors from "./components/client/ClientVendors";
 import ClientBudget from "./components/client/ClientBudget";
+import ClientMarketplace from "./components/client/ClientMarketplace";
 
 // Vendor pages
 import VendorDashboard from "./components/vendor/VendorDashboard";
