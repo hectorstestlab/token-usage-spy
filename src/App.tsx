@@ -82,6 +82,7 @@ const App = () => (
               <Route path="reviews" element={<VendorReviews />} />
               <Route path="marketplace" element={<VendorMarketplace />} />
               <Route path="messages" element={<Messages />} />
+              <Route path="payments" element={<PaymentSettings />} />
               <Route path="settings" element={<SettingsPage />} />
             </Route>
 

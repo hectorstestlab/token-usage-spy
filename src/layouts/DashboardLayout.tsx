@@ -71,6 +71,7 @@ const vendorNav: NavItem[] = [
   { title: "Marketplace", url: "/vendor/marketplace", icon: ShoppingBag },
   { title: "Reseñas", url: "/vendor/reviews", icon: Star },
   { title: "Mensajes", url: "/vendor/messages", icon: MessageCircle },
+  { title: "Pagos", url: "/vendor/payments", icon: CreditCard },
   { title: "Configuración", url: "/vendor/settings", icon: Settings },
 ];
 
