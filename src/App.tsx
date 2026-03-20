@@ -29,6 +29,7 @@ import VendorDashboard from "./components/vendor/VendorDashboard";
 import VendorBookings from "./components/vendor/VendorBookings";
 import VendorServices from "./components/vendor/VendorServices";
 import VendorReviews from "./components/vendor/VendorReviews";
+import VendorMarketplace from "./components/vendor/VendorMarketplace";
 
 // Shared pages
 import Messages from "./components/shared/Messages";
