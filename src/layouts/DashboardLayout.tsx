@@ -26,6 +26,7 @@ import {
   DollarSign,
   MessageCircle,
   Settings,
+  CreditCard,
   LogOut,
   Star,
   ClipboardList,
