@@ -15,6 +15,7 @@ import PlannerWeddings from "./components/planner/PlannerWeddings";
 import PlannerClients from "./components/planner/PlannerClients";
 import PlannerVendors from "./components/planner/PlannerVendors";
 import PlannerBudget from "./components/planner/PlannerBudget";
+import PlannerMarketplace from "./components/planner/PlannerMarketplace";
 
 // Client pages
 import ClientDashboard from "./components/client/ClientDashboard";
