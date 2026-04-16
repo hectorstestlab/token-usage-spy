@@ -22,8 +22,11 @@ const stats = [
   { label: "Inversión Mensual", value: "$2,000", icon: DollarSign, sub: "3 anuncios activos" },
 ];
 
+import NewListingDialog from "@/components/marketplace/NewListingDialog";
+
 export default function VendorMarketplace() {
   const [ads, setAds] = useState(vendorAds);
+  const [newOpen, setNewOpen] = useState(false);
   const contracts = useMemo(() => marketplaceContracts.filter((c) => c.vendorName === "Captura Momentos" || true), []);
 
   const toggleAd = (id: string) => {
@@ -42,7 +45,7 @@ export default function VendorMarketplace() {
           <h1 className="text-2xl font-bold text-foreground">Marketplace</h1>
           <p className="text-muted-foreground">Gestiona tus anuncios y contratos</p>
         </div>
-        <Button className="gap-2"><Plus className="h-4 w-4" /> Nuevo Anuncio</Button>
+        <Button className="gap-2" onClick={() => setNewOpen(true)}><Plus className="h-4 w-4" /> Publicar Servicio</Button>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -107,6 +110,8 @@ export default function VendorMarketplace() {
           </div>
         </TabsContent>
       </Tabs>
+
+      <NewListingDialog open={newOpen} onOpenChange={setNewOpen} />
     </div>
   );
 }

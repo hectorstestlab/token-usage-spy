@@ -1,16 +1,20 @@
 import { useState, useMemo } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { marketplaceListings, marketplaceContracts } from "@/data/marketplaceData";
+import { marketplaceContracts } from "@/data/marketplaceData";
 import ListingCard from "@/components/marketplace/ListingCard";
 import MarketplaceFilters from "@/components/marketplace/MarketplaceFilters";
 import ContractCard from "@/components/marketplace/ContractCard";
 import HireDialog from "@/components/marketplace/HireDialog";
+import ListingDetailDialog from "@/components/marketplace/ListingDetailDialog";
+import { useMarketplace } from "@/contexts/MarketplaceContext";
 import type { MarketplaceListing } from "@/types/marketplace";
 
 export default function PlannerMarketplace() {
+  const { listings: marketplaceListings } = useMarketplace();
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("Todos");
   const [hireTarget, setHireTarget] = useState<MarketplaceListing | null>(null);
+  const [detailTarget, setDetailTarget] = useState<MarketplaceListing | null>(null);
 
   const filtered = useMemo(() => {
     return marketplaceListings
@@ -44,7 +48,7 @@ export default function PlannerMarketplace() {
           <MarketplaceFilters search={search} onSearchChange={setSearch} activeCategory={category} onCategoryChange={setCategory} />
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {filtered.map((listing) => (
-              <ListingCard key={listing.id} listing={listing} onHire={setHireTarget} showHireButton />
+              <ListingCard key={listing.id} listing={listing} onHire={setHireTarget} onView={setDetailTarget} showHireButton />
             ))}
           </div>
           {filtered.length === 0 && (
@@ -62,6 +66,7 @@ export default function PlannerMarketplace() {
       </Tabs>
 
       <HireDialog listing={hireTarget} open={!!hireTarget} onOpenChange={(v) => !v && setHireTarget(null)} hiredBy="planner" />
+      <ListingDetailDialog listing={detailTarget} open={!!detailTarget} onOpenChange={(v) => !v && setDetailTarget(null)} onHire={setHireTarget} />
     </div>
   );
 }
