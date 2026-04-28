@@ -183,7 +183,10 @@ export default function PlannerWeddings() {
           <h1 className="text-2xl font-bold text-foreground">Bodas</h1>
           <p className="text-muted-foreground">Gestiona todas tus próximas bodas</p>
         </div>
-        <Badge variant="secondary">{weddings.length} en total</Badge>
+        <div className="flex items-center gap-3">
+          <Badge variant="secondary">{weddings.length} en total</Badge>
+          <NewWeddingDialog />
+        </div>
       </div>
 
       <Tabs defaultValue="calendar" className="space-y-4">
