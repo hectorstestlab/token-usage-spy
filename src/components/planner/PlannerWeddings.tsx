@@ -19,24 +19,8 @@ import {
   isToday,
 } from "date-fns";
 import { es } from "date-fns/locale";
-
-interface Wedding {
-  couple: string;
-  date: string;
-  dateObj: Date;
-  venue: string;
-  guests: number;
-  status: string;
-  budget: string;
-}
-
-const weddings: Wedding[] = [
-  { couple: "Sara y Miguel", date: "15 Abr, 2026", dateObj: new Date(2026, 3, 15), venue: "Jardín de Rosas", guests: 150, status: "En Curso", budget: "$45,000" },
-  { couple: "Emma y Jaime", date: "22 May, 2026", dateObj: new Date(2026, 4, 22), venue: "Hacienda del Lago", guests: 200, status: "Requiere Atención", budget: "$62,000" },
-  { couple: "Olivia y David", date: "10 Jun, 2026", dateObj: new Date(2026, 5, 10), venue: "Gran Salón", guests: 120, status: "En Curso", budget: "$38,000" },
-  { couple: "Sofía y Liam", date: "4 Jul, 2026", dateObj: new Date(2026, 6, 4), venue: "Pabellón de Playa", guests: 80, status: "Planificando", budget: "$28,000" },
-  { couple: "Ava y Noah", date: "20 Ago, 2026", dateObj: new Date(2026, 7, 20), venue: "Cabaña de Montaña", guests: 100, status: "Planificando", budget: "$35,000" },
-];
+import { useEntities, Wedding } from "@/contexts/EntitiesContext";
+import { NewWeddingDialog } from "@/components/shared/EntityDialogs";
 
 function WeddingPopoverContent({ wedding }: { wedding: Wedding }) {
   return (
@@ -67,6 +51,7 @@ function WeddingPopoverContent({ wedding }: { wedding: Wedding }) {
 }
 
 function CalendarView() {
+  const { weddings } = useEntities();
   const [currentMonth, setCurrentMonth] = useState(new Date(2026, 3, 1));
 
   const days = useMemo(() => {
@@ -84,7 +69,7 @@ function CalendarView() {
       map.set(key, arr);
     });
     return map;
-  }, []);
+  }, [weddings]);
 
   const weekdayLabels = ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"];
 
@@ -141,7 +126,7 @@ function CalendarView() {
                 </div>
                 <div className="flex flex-col gap-1 overflow-hidden">
                   {dayWeddings.map((w) => (
-                    <Popover key={w.couple}>
+                    <Popover key={w.id}>
                       <PopoverTrigger asChild>
                         <button
                           className={`text-left text-[11px] leading-tight px-1.5 py-1 rounded truncate font-medium transition-colors ${
@@ -169,10 +154,11 @@ function CalendarView() {
 }
 
 function ListView() {
+  const { weddings } = useEntities();
   return (
     <div className="grid gap-4">
       {weddings.map((w) => (
-        <Card key={w.couple} className="hover:shadow-md transition-shadow cursor-pointer">
+        <Card key={w.id} className="hover:shadow-md transition-shadow cursor-pointer">
           <CardContent className="p-5 flex items-center gap-6">
             <div className="flex-1">
               <h3 className="font-semibold text-foreground">{w.couple}</h3>
@@ -189,6 +175,7 @@ function ListView() {
 }
 
 export default function PlannerWeddings() {
+  const { weddings } = useEntities();
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -196,7 +183,10 @@ export default function PlannerWeddings() {
           <h1 className="text-2xl font-bold text-foreground">Bodas</h1>
           <p className="text-muted-foreground">Gestiona todas tus próximas bodas</p>
         </div>
-        <Badge variant="secondary">{weddings.length} en total</Badge>
+        <div className="flex items-center gap-3">
+          <Badge variant="secondary">{weddings.length} en total</Badge>
+          <NewWeddingDialog />
+        </div>
       </div>
 
       <Tabs defaultValue="calendar" className="space-y-4">
