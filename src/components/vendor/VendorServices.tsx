@@ -1,15 +1,10 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-
-const services = [
-  { name: "Fotografía de Boda", description: "Cobertura completa del día hasta 10 horas", price: "$3,200", active: true },
-  { name: "Sesión de Compromiso", description: "Sesión de 1 hora en ubicación a elegir", price: "$800", active: true },
-  { name: "Paquete Elopement", description: "Cobertura de ceremonia íntima de 2 horas", price: "$1,500", active: true },
-  { name: "Photo Booth Adicional", description: "Fondo personalizado, accesorios, impresiones ilimitadas", price: "$600", active: false },
-];
+import { useEntities } from "@/contexts/EntitiesContext";
+import { NewServiceDialog } from "@/components/shared/EntityDialogs";
 
 export default function VendorServices() {
+  const { services } = useEntities();
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -17,11 +12,11 @@ export default function VendorServices() {
           <h1 className="text-2xl font-bold text-foreground">Servicios</h1>
           <p className="text-muted-foreground">Gestiona tus ofertas de servicios</p>
         </div>
-        <Button>Agregar Servicio</Button>
+        <NewServiceDialog />
       </div>
       <div className="grid sm:grid-cols-2 gap-4">
         {services.map((s) => (
-          <Card key={s.name}>
+          <Card key={s.id}>
             <CardContent className="p-5 space-y-3">
               <div className="flex items-start justify-between">
                 <h3 className="font-semibold text-foreground">{s.name}</h3>
