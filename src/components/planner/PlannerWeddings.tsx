@@ -51,6 +51,7 @@ function WeddingPopoverContent({ wedding }: { wedding: Wedding }) {
 }
 
 function CalendarView() {
+  const { weddings } = useEntities();
   const [currentMonth, setCurrentMonth] = useState(new Date(2026, 3, 1));
 
   const days = useMemo(() => {
@@ -68,7 +69,7 @@ function CalendarView() {
       map.set(key, arr);
     });
     return map;
-  }, []);
+  }, [weddings]);
 
   const weekdayLabels = ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"];
 
