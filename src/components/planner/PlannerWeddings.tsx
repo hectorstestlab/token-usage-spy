@@ -19,24 +19,8 @@ import {
   isToday,
 } from "date-fns";
 import { es } from "date-fns/locale";
-
-interface Wedding {
-  couple: string;
-  date: string;
-  dateObj: Date;
-  venue: string;
-  guests: number;
-  status: string;
-  budget: string;
-}
-
-const weddings: Wedding[] = [
-  { couple: "Sara y Miguel", date: "15 Abr, 2026", dateObj: new Date(2026, 3, 15), venue: "Jardín de Rosas", guests: 150, status: "En Curso", budget: "$45,000" },
-  { couple: "Emma y Jaime", date: "22 May, 2026", dateObj: new Date(2026, 4, 22), venue: "Hacienda del Lago", guests: 200, status: "Requiere Atención", budget: "$62,000" },
-  { couple: "Olivia y David", date: "10 Jun, 2026", dateObj: new Date(2026, 5, 10), venue: "Gran Salón", guests: 120, status: "En Curso", budget: "$38,000" },
-  { couple: "Sofía y Liam", date: "4 Jul, 2026", dateObj: new Date(2026, 6, 4), venue: "Pabellón de Playa", guests: 80, status: "Planificando", budget: "$28,000" },
-  { couple: "Ava y Noah", date: "20 Ago, 2026", dateObj: new Date(2026, 7, 20), venue: "Cabaña de Montaña", guests: 100, status: "Planificando", budget: "$35,000" },
-];
+import { useEntities, Wedding } from "@/contexts/EntitiesContext";
+import { NewWeddingDialog } from "@/components/shared/EntityDialogs";
 
 function WeddingPopoverContent({ wedding }: { wedding: Wedding }) {
   return (
