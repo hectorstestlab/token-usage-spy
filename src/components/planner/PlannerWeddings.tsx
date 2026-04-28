@@ -126,7 +126,7 @@ function CalendarView() {
                 </div>
                 <div className="flex flex-col gap-1 overflow-hidden">
                   {dayWeddings.map((w) => (
-                    <Popover key={w.couple}>
+                    <Popover key={w.id}>
                       <PopoverTrigger asChild>
                         <button
                           className={`text-left text-[11px] leading-tight px-1.5 py-1 rounded truncate font-medium transition-colors ${
@@ -154,10 +154,11 @@ function CalendarView() {
 }
 
 function ListView() {
+  const { weddings } = useEntities();
   return (
     <div className="grid gap-4">
       {weddings.map((w) => (
-        <Card key={w.couple} className="hover:shadow-md transition-shadow cursor-pointer">
+        <Card key={w.id} className="hover:shadow-md transition-shadow cursor-pointer">
           <CardContent className="p-5 flex items-center gap-6">
             <div className="flex-1">
               <h3 className="font-semibold text-foreground">{w.couple}</h3>
@@ -174,6 +175,7 @@ function ListView() {
 }
 
 export default function PlannerWeddings() {
+  const { weddings } = useEntities();
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
