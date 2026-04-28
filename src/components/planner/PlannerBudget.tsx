@@ -1,26 +1,22 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-
-const categories = [
-  { name: "Lugar y Catering", allocated: 18000, spent: 15200 },
-  { name: "Fotografía y Video", allocated: 8000, spent: 6500 },
-  { name: "Flores y Decoración", allocated: 5000, spent: 4800 },
-  { name: "Entretenimiento", allocated: 4000, spent: 2000 },
-  { name: "Vestuario y Belleza", allocated: 3500, spent: 3200 },
-  { name: "Papelería", allocated: 1500, spent: 900 },
-  { name: "Transporte", allocated: 2000, spent: 0 },
-  { name: "Varios", allocated: 3000, spent: 1400 },
-];
-
-const totalAllocated = categories.reduce((s, c) => s + c.allocated, 0);
-const totalSpent = categories.reduce((s, c) => s + c.spent, 0);
+import { useEntities } from "@/contexts/EntitiesContext";
+import { NewBudgetCategoryDialog } from "@/components/shared/EntityDialogs";
 
 export default function PlannerBudget() {
+  const { budget } = useEntities();
+  const categories = budget.filter((b) => b.scope === "planner");
+  const totalAllocated = categories.reduce((s, c) => s + c.allocated, 0);
+  const totalSpent = categories.reduce((s, c) => s + c.spent, 0);
+
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold text-foreground">Resumen de Presupuesto</h1>
-        <p className="text-muted-foreground">Seguimiento de gastos en todas las bodas activas</p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-bold text-foreground">Resumen de Presupuesto</h1>
+          <p className="text-muted-foreground">Seguimiento de gastos en todas las bodas activas</p>
+        </div>
+        <NewBudgetCategoryDialog scope="planner" />
       </div>
 
       <div className="grid sm:grid-cols-3 gap-4">
@@ -50,9 +46,9 @@ export default function PlannerBudget() {
         </CardHeader>
         <CardContent className="space-y-5">
           {categories.map((c) => {
-            const pct = Math.round((c.spent / c.allocated) * 100);
+            const pct = c.allocated > 0 ? Math.round((c.spent / c.allocated) * 100) : 0;
             return (
-              <div key={c.name} className="space-y-1.5">
+              <div key={c.id} className="space-y-1.5">
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-foreground font-medium">{c.name}</span>
                   <span className="text-muted-foreground">
