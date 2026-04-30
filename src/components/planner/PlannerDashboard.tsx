@@ -48,9 +48,14 @@ export default function PlannerDashboard() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold text-foreground">Panel</h1>
-        <p className="text-muted-foreground">¡Bienvenido de vuelta! Aquí tienes tu resumen.</p>
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <h1 className="text-2xl font-bold text-foreground">Panel</h1>
+          <p className="text-muted-foreground">¡Bienvenido de vuelta! Aquí tienes tu resumen.</p>
+        </div>
+        <Button asChild variant="outline" size="sm">
+          <Link to="/planner/analytics">Ver métricas</Link>
+        </Button>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
