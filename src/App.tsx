@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { UserProvider } from "@/contexts/UserContext";
 import { MarketplaceProvider } from "@/contexts/MarketplaceContext";
 import { EntitiesProvider } from "@/contexts/EntitiesContext";
+import { InterviewsProvider } from "@/contexts/InterviewsContext";
 import Landing from "./pages/Landing";
 import Login from "./pages/Login";
 import DashboardLayout from "./layouts/DashboardLayout";
@@ -19,6 +20,7 @@ import PlannerClients from "./components/planner/PlannerClients";
 import PlannerVendors from "./components/planner/PlannerVendors";
 import PlannerBudget from "./components/planner/PlannerBudget";
 import PlannerMarketplace from "./components/planner/PlannerMarketplace";
+import PlannerInterviews from "./components/planner/PlannerInterviews";
 
 // Client pages
 import ClientDashboard from "./components/client/ClientDashboard";
@@ -47,6 +49,7 @@ const App = () => (
     <UserProvider>
       <MarketplaceProvider>
       <EntitiesProvider>
+      <InterviewsProvider>
       <TooltipProvider>
         <Toaster />
         <Sonner />
@@ -61,6 +64,7 @@ const App = () => (
               <Route path="analytics" element={<PlannerAnalytics />} />
               <Route path="weddings" element={<PlannerWeddings />} />
               <Route path="clients" element={<PlannerClients />} />
+              <Route path="interviews" element={<PlannerInterviews />} />
               <Route path="vendors" element={<PlannerVendors />} />
               <Route path="marketplace" element={<PlannerMarketplace />} />
               <Route path="budget" element={<PlannerBudget />} />
@@ -98,6 +102,7 @@ const App = () => (
           </Routes>
         </BrowserRouter>
       </TooltipProvider>
+      </InterviewsProvider>
       </EntitiesProvider>
       </MarketplaceProvider>
     </UserProvider>

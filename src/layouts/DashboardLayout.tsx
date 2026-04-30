@@ -34,6 +34,7 @@ import {
   ShoppingBag,
   ShieldCheck,
   BarChart3,
+  MessageSquareQuote,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
@@ -48,6 +49,7 @@ const plannerNav: NavItem[] = [
   { title: "Métricas", url: "/planner/analytics", icon: BarChart3 },
   { title: "Bodas", url: "/planner/weddings", icon: CalendarDays },
   { title: "Clientes", url: "/planner/clients", icon: Users },
+  { title: "Entrevistas", url: "/planner/interviews", icon: MessageSquareQuote },
   { title: "Proveedores", url: "/planner/vendors", icon: Store },
   { title: "Marketplace", url: "/planner/marketplace", icon: ShoppingBag },
   { title: "Presupuesto", url: "/planner/budget", icon: DollarSign },
