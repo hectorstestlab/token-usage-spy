@@ -13,6 +13,7 @@ import NotFound from "./pages/NotFound";
 
 // Planner pages
 import PlannerDashboard from "./components/planner/PlannerDashboard";
+import PlannerAnalytics from "./components/planner/PlannerAnalytics";
 import PlannerWeddings from "./components/planner/PlannerWeddings";
 import PlannerClients from "./components/planner/PlannerClients";
 import PlannerVendors from "./components/planner/PlannerVendors";
@@ -57,6 +58,7 @@ const App = () => (
             {/* Planner routes */}
             <Route path="/planner" element={<DashboardLayout />}>
               <Route path="dashboard" element={<PlannerDashboard />} />
+              <Route path="analytics" element={<PlannerAnalytics />} />
               <Route path="weddings" element={<PlannerWeddings />} />
               <Route path="clients" element={<PlannerClients />} />
               <Route path="vendors" element={<PlannerVendors />} />

@@ -33,6 +33,7 @@ import {
   CalendarCheck,
   ShoppingBag,
   ShieldCheck,
+  BarChart3,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
@@ -44,6 +45,7 @@ interface NavItem {
 
 const plannerNav: NavItem[] = [
   { title: "Panel", url: "/planner/dashboard", icon: LayoutDashboard },
+  { title: "Métricas", url: "/planner/analytics", icon: BarChart3 },
   { title: "Bodas", url: "/planner/weddings", icon: CalendarDays },
   { title: "Clientes", url: "/planner/clients", icon: Users },
   { title: "Proveedores", url: "/planner/vendors", icon: Store },

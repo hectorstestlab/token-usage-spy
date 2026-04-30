@@ -47,6 +47,12 @@
     --wedding-blush: 350 60% 90%;
     --wedding-sage: 140 20% 72%;
     --wedding-cream: 40 40% 95%;
+
+    --chart-1: 340 65% 55%;
+    --chart-2: 35 80% 56%;
+    --chart-3: 140 30% 55%;
+    --chart-4: 200 60% 55%;
+    --chart-5: 280 45% 60%;
   }
 
   .dark {
@@ -91,6 +97,12 @@
     --wedding-blush: 350 40% 25%;
     --wedding-sage: 140 15% 30%;
     --wedding-cream: 40 20% 15%;
+
+    --chart-1: 340 65% 60%;
+    --chart-2: 35 75% 55%;
+    --chart-3: 140 30% 55%;
+    --chart-4: 200 60% 60%;
+    --chart-5: 280 50% 65%;
   }
 }
 

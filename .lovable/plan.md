@@ -1,56 +1,79 @@
-
-
-# Métodos de Pago Compartidos — Cliente → Planner
+# Panel de Métricas de Negocio — Wedding Planner
 
 ## Resumen
 
-Permitir que clientes autoricen métodos de pago para uso del planner, con un flujo de aprobación/denegación de pagos y visibilidad compartida en historiales.
+Crear una nueva página `/planner/analytics` con un panel de métricas que ayude al planner a medir el éxito de su negocio: ingresos, conversión, eficiencia operativa, satisfacción y crecimiento. Usa los datos del `EntitiesContext` (bodas, clientes, presupuesto, tareas) más datos derivados/simulados (ingresos mensuales, fuentes de clientes, NPS).
 
-## Nuevos Archivos
+## Nuevos archivos
 
-### 1. `src/types/paymentApprovals.ts`
-- `SharedPaymentMethod`: extiende `PaymentMethod` con `ownerId`, `ownerName`, `approvedForPlanner`, `sharedAt`
-- `PaymentApprovalRequest`: `id`, `transactionId`, `clientId`, `plannerId`, `listing`, `amount`, `paymentMethodLast4`, `status` (pendiente/aprobado/denegado), `requestedAt`, `resolvedAt`
+### 1. `src/components/planner/PlannerAnalytics.tsx`
+Página principal del panel. Estructura:
 
-### 2. `src/data/paymentApprovalsData.ts`
-Mock data: métodos compartidos y solicitudes de aprobación pendientes/resueltas.
+- **Header**: Título "Métricas del Negocio" + selector de rango temporal (Tabs: 30d / 90d / Año / Todo).
 
-### 3. `src/components/client/ClientPaymentApprovals.tsx`
-Panel donde el cliente:
-- Ve lista de solicitudes de pago pendientes (servicio, monto, planner, tarjeta) con botones Aprobar/Denegar
-- Ve historial de solicitudes resueltas
-- Gestiona qué tarjetas están autorizadas para el planner (toggle on/off)
+- **KPIs principales (4 tarjetas)** — patrón visual igual a `PlannerDashboard`:
+  - Ingresos totales (suma de `budget` planner-scope) + variación %.
+  - Bodas activas + completadas en el periodo.
+  - Ticket promedio por boda (ingresos / nº bodas).
+  - Tasa de conversión clientes nuevos → activos (de `clients`).
 
-### 4. `src/components/planner/PlannerPayWithClient.tsx`
-En el flujo de pago del planner, opción adicional "Usar tarjeta del cliente" que muestra las tarjetas autorizadas por los clientes asignados. Al seleccionar una, el pago queda en estado "Pendiente de aprobación".
+- **Gráficos (recharts vía `@/components/ui/chart`)**:
+  1. **Ingresos por mes** — `BarChart` últimos 6 meses (datos derivados de `weddings` por `dateObj` + valor `budget`).
+  2. **Bodas por estado** — `PieChart` (Planificando / En Curso / Requiere Atención / Completado).
+  3. **Distribución de presupuesto por categoría** — `BarChart` horizontal (top 6 categorías scope planner).
+  4. **Origen de clientes** — `PieChart` con datos mock (Referidos, Marketplace, Redes, Web).
 
-## Archivos Modificados
+- **Sección operativa (2 columnas)**:
+  - **Productividad**: % tareas completadas, tareas urgentes pendientes, progreso promedio de bodas.
+  - **Top proveedores**: ranking por `bookings` y `rating` desde `vendors`.
 
-### 5. `src/components/shared/PaymentSettings.tsx`
-- **Vista Cliente**: Agregar sección "Tarjetas compartidas con tu planner" con toggles para autorizar/revocar tarjetas
-- **Vista Planner**: Agregar sección "Tarjetas de clientes autorizadas" (solo lectura)
+- **Indicadores de salud**:
+  - Satisfacción del cliente (NPS simulado, valor estático con `Progress`).
+  - Margen estimado (gastado vs asignado).
+  - Bodas en riesgo (`status === "Requiere Atención"`).
 
-### 6. `src/components/marketplace/PaymentDialog.tsx`
-- Cuando `role === "planner"`: en el paso de selección de método, agregar sección "Tarjetas de clientes" con las tarjetas autorizadas. Al elegir una, el flujo cambia: en vez de "Pago procesado", muestra "Solicitud enviada al cliente — pendiente de aprobación"
+Todas las tarjetas usan `Card` + `CardHeader/CardContent`. Los KPIs son clickeables y abren un `DrillDownDialog` con el desglose (reutilizando el componente existente).
 
-### 7. `src/components/shared/PaymentSettings.tsx` (historial)
-- Transacciones hechas por el planner con tarjeta del cliente aparecen en ambos historiales con badge "Pagado por planner" o "Pendiente aprobación"
+### 2. `src/lib/analyticsHelpers.ts`
+Funciones puras:
+- `parseBudgetString(s)` → number (limpia `$` y comas).
+- `revenueByMonth(weddings)` → `{ month, revenue }[]`.
+- `weddingsByStatus(weddings)` → `{ status, count }[]`.
+- `taskCompletionRate(tasks)` → number.
+- `averageProgress(weddings)` → number.
 
-### 8. `src/components/client/ClientDashboard.tsx`
-- Agregar alerta/banner cuando hay solicitudes de pago pendientes con link a la sección de aprobaciones
+## Archivos a editar
 
-### 9. `src/layouts/DashboardLayout.tsx`
-- Agregar item de navegación "Aprobaciones" para el rol cliente (con badge de pendientes)
+### 3. `src/layouts/DashboardLayout.tsx`
+Agregar entrada en `plannerNav`:
+```ts
+{ title: "Métricas", url: "/planner/analytics", icon: BarChart3 }
+```
+(insertada entre "Panel" y "Bodas"; importar `BarChart3` de lucide).
 
-### 10. `src/App.tsx`
-- Agregar ruta `/client/approvals` → `ClientPaymentApprovals`
-
-## Flujo
-
-```text
-Cliente: Settings → Pagos → Autoriza tarjeta para planner
-Planner: Marketplace → Contratar → PaymentDialog → "Usar tarjeta del cliente" → Solicitud enviada
-Cliente: Dashboard muestra alerta → Aprobaciones → Aprobar/Denegar
-Ambos: Historial muestra la transacción con indicador de quién pagó
+### 4. `src/App.tsx`
+Importar `PlannerAnalytics` y registrar la ruta dentro del bloque planner:
+```tsx
+<Route path="analytics" element={<PlannerAnalytics />} />
 ```
 
+### 5. `src/components/planner/PlannerDashboard.tsx`
+Pequeño CTA en el header del Panel: botón secundario "Ver métricas" → `/planner/analytics`, para descubrir la sección.
+
+## Detalles técnicos
+
+- Gráficos con `recharts` envueltos en `ChartContainer` (`src/components/ui/chart.tsx`) — hsl tokens del tema (`--primary`, `--secondary`, `--accent`, `--muted-foreground`).
+- Sin nuevas dependencias.
+- Sin backend: todo se calcula con `useMemo` desde `useEntities()`. Los datasets que no existen (NPS, fuentes de clientes, ingresos históricos previos al periodo) se simulan localmente con valores plausibles.
+- Todo el copy en español, paleta wedding (rose/gold/blush/sage) ya configurada.
+- Diseño responsive: KPIs `grid-cols-1 sm:grid-cols-2 lg:grid-cols-4`; gráficos `grid-cols-1 lg:grid-cols-2`.
+
+## Flujo de usuario
+
+```text
+Sidebar → Métricas
+  → KPIs (clic → drill-down con desglose)
+  → Gráficos de ingresos, estados, presupuesto, fuentes
+  → Productividad + Top proveedores
+  → Indicadores de salud del negocio
+```
