@@ -107,9 +107,9 @@ function AppSidebar() {
   const collapsed = state === "collapsed";
   const items = getNavItems(role);
 
-  const handleLogout = () => {
-    logout();
-    navigate("/");
+  const handleLogout = async () => {
+    await logout();
+    navigate("/login");
   };
 
   return (
