@@ -11,6 +11,7 @@ import Landing from "./pages/Landing";
 import Login from "./pages/Login";
 import DashboardLayout from "./layouts/DashboardLayout";
 import NotFound from "./pages/NotFound";
+import ProtectedRoute from "./components/auth/ProtectedRoute";
 
 // Planner pages
 import PlannerDashboard from "./components/planner/PlannerDashboard";
@@ -59,7 +60,7 @@ const App = () => (
             <Route path="/login" element={<Login />} />
 
             {/* Planner routes */}
-            <Route path="/planner" element={<DashboardLayout />}>
+            <Route path="/planner" element={<ProtectedRoute allowedRole="planner"><DashboardLayout /></ProtectedRoute>}>
               <Route path="dashboard" element={<PlannerDashboard />} />
               <Route path="analytics" element={<PlannerAnalytics />} />
               <Route path="weddings" element={<PlannerWeddings />} />
@@ -74,7 +75,7 @@ const App = () => (
             </Route>
 
             {/* Client routes */}
-            <Route path="/client" element={<DashboardLayout />}>
+            <Route path="/client" element={<ProtectedRoute allowedRole="client"><DashboardLayout /></ProtectedRoute>}>
               <Route path="dashboard" element={<ClientDashboard />} />
               <Route path="wedding" element={<ClientWedding />} />
               <Route path="vendors" element={<ClientVendors />} />
@@ -87,7 +88,7 @@ const App = () => (
             </Route>
 
             {/* Vendor routes */}
-            <Route path="/vendor" element={<DashboardLayout />}>
+            <Route path="/vendor" element={<ProtectedRoute allowedRole="vendor"><DashboardLayout /></ProtectedRoute>}>
               <Route path="dashboard" element={<VendorDashboard />} />
               <Route path="bookings" element={<VendorBookings />} />
               <Route path="services" element={<VendorServices />} />
@@ -97,6 +98,7 @@ const App = () => (
               <Route path="payments" element={<PaymentSettings />} />
               <Route path="settings" element={<SettingsPage />} />
             </Route>
+
 
             <Route path="*" element={<NotFound />} />
           </Routes>
