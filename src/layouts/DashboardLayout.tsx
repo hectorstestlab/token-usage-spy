@@ -50,7 +50,7 @@ const plannerNav: NavItem[] = [
   { title: "Bodas", url: "/planner/weddings", icon: CalendarDays },
   { title: "Clientes", url: "/planner/clients", icon: Users },
   { title: "Entrevistas", url: "/planner/interviews", icon: MessageSquareQuote },
-  { title: "Proveedores", url: "/planner/vendors", icon: Store },
+  
   { title: "Marketplace", url: "/planner/marketplace", icon: ShoppingBag },
   { title: "Presupuesto", url: "/planner/budget", icon: DollarSign },
   { title: "Mensajes", url: "/planner/messages", icon: MessageCircle },
@@ -61,7 +61,7 @@ const plannerNav: NavItem[] = [
 const clientNav: NavItem[] = [
   { title: "Panel", url: "/client/dashboard", icon: LayoutDashboard },
   { title: "Mi Boda", url: "/client/wedding", icon: CalendarDays },
-  { title: "Proveedores", url: "/client/vendors", icon: Store },
+  
   { title: "Marketplace", url: "/client/marketplace", icon: ShoppingBag },
   { title: "Presupuesto", url: "/client/budget", icon: DollarSign },
   { title: "Mensajes", url: "/client/messages", icon: MessageCircle },
