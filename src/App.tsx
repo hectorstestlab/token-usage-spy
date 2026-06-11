@@ -18,7 +18,7 @@ import PlannerDashboard from "./components/planner/PlannerDashboard";
 import PlannerAnalytics from "./components/planner/PlannerAnalytics";
 import PlannerWeddings from "./components/planner/PlannerWeddings";
 import PlannerClients from "./components/planner/PlannerClients";
-
+import PlannerBudget from "./components/planner/PlannerBudget";
 import PlannerVendors from "./components/planner/PlannerVendors";
 import PlannerInterviews from "./components/planner/PlannerInterviews";
 
