@@ -19,16 +19,14 @@ import PlannerAnalytics from "./components/planner/PlannerAnalytics";
 import PlannerWeddings from "./components/planner/PlannerWeddings";
 import PlannerClients from "./components/planner/PlannerClients";
 
-import PlannerBudget from "./components/planner/PlannerBudget";
-import PlannerMarketplace from "./components/planner/PlannerMarketplace";
+import PlannerVendors from "./components/planner/PlannerVendors";
 import PlannerInterviews from "./components/planner/PlannerInterviews";
 
 // Client pages
 import ClientDashboard from "./components/client/ClientDashboard";
 import ClientWedding from "./components/client/ClientWedding";
-
+import ClientVendors from "./components/client/ClientVendors";
 import ClientBudget from "./components/client/ClientBudget";
-import ClientMarketplace from "./components/client/ClientMarketplace";
 import ClientPaymentApprovals from "./components/client/ClientPaymentApprovals";
 
 // Vendor pages
@@ -36,7 +34,6 @@ import VendorDashboard from "./components/vendor/VendorDashboard";
 import VendorBookings from "./components/vendor/VendorBookings";
 import VendorServices from "./components/vendor/VendorServices";
 import VendorReviews from "./components/vendor/VendorReviews";
-import VendorMarketplace from "./components/vendor/VendorMarketplace";
 
 // Shared pages
 import Messages from "./components/shared/Messages";
@@ -66,8 +63,7 @@ const App = () => (
               <Route path="weddings" element={<PlannerWeddings />} />
               <Route path="clients" element={<PlannerClients />} />
               <Route path="interviews" element={<PlannerInterviews />} />
-              
-              <Route path="marketplace" element={<PlannerMarketplace />} />
+              <Route path="vendors" element={<PlannerVendors />} />
               <Route path="budget" element={<PlannerBudget />} />
               <Route path="messages" element={<Messages />} />
               <Route path="payments" element={<PaymentSettings />} />
@@ -78,8 +74,7 @@ const App = () => (
             <Route path="/client" element={<ProtectedRoute allowedRole="client"><DashboardLayout /></ProtectedRoute>}>
               <Route path="dashboard" element={<ClientDashboard />} />
               <Route path="wedding" element={<ClientWedding />} />
-              
-              <Route path="marketplace" element={<ClientMarketplace />} />
+              <Route path="vendors" element={<ClientVendors />} />
               <Route path="budget" element={<ClientBudget />} />
               <Route path="messages" element={<Messages />} />
               <Route path="approvals" element={<ClientPaymentApprovals />} />
@@ -93,7 +88,6 @@ const App = () => (
               <Route path="bookings" element={<VendorBookings />} />
               <Route path="services" element={<VendorServices />} />
               <Route path="reviews" element={<VendorReviews />} />
-              <Route path="marketplace" element={<VendorMarketplace />} />
               <Route path="messages" element={<Messages />} />
               <Route path="payments" element={<PaymentSettings />} />
               <Route path="settings" element={<SettingsPage />} />
