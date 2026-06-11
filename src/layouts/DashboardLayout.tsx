@@ -50,8 +50,7 @@ const plannerNav: NavItem[] = [
   { title: "Bodas", url: "/planner/weddings", icon: CalendarDays },
   { title: "Clientes", url: "/planner/clients", icon: Users },
   { title: "Entrevistas", url: "/planner/interviews", icon: MessageSquareQuote },
-  
-  { title: "Marketplace", url: "/planner/marketplace", icon: ShoppingBag },
+  { title: "Proveedores", url: "/planner/vendors", icon: Store },
   { title: "Presupuesto", url: "/planner/budget", icon: DollarSign },
   { title: "Mensajes", url: "/planner/messages", icon: MessageCircle },
   { title: "Pagos", url: "/planner/payments", icon: CreditCard },
@@ -61,8 +60,7 @@ const plannerNav: NavItem[] = [
 const clientNav: NavItem[] = [
   { title: "Panel", url: "/client/dashboard", icon: LayoutDashboard },
   { title: "Mi Boda", url: "/client/wedding", icon: CalendarDays },
-  
-  { title: "Marketplace", url: "/client/marketplace", icon: ShoppingBag },
+  { title: "Proveedores", url: "/client/vendors", icon: Store },
   { title: "Presupuesto", url: "/client/budget", icon: DollarSign },
   { title: "Mensajes", url: "/client/messages", icon: MessageCircle },
   { title: "Aprobaciones", url: "/client/approvals", icon: ShieldCheck },
@@ -74,7 +72,6 @@ const vendorNav: NavItem[] = [
   { title: "Panel", url: "/vendor/dashboard", icon: LayoutDashboard },
   { title: "Reservas", url: "/vendor/bookings", icon: CalendarCheck },
   { title: "Servicios", url: "/vendor/services", icon: ClipboardList },
-  { title: "Marketplace", url: "/vendor/marketplace", icon: ShoppingBag },
   { title: "Reseñas", url: "/vendor/reviews", icon: Star },
   { title: "Mensajes", url: "/vendor/messages", icon: MessageCircle },
   { title: "Pagos", url: "/vendor/payments", icon: CreditCard },
