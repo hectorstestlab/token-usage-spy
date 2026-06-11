@@ -18,7 +18,7 @@ import PlannerDashboard from "./components/planner/PlannerDashboard";
 import PlannerAnalytics from "./components/planner/PlannerAnalytics";
 import PlannerWeddings from "./components/planner/PlannerWeddings";
 import PlannerClients from "./components/planner/PlannerClients";
-import PlannerVendors from "./components/planner/PlannerVendors";
+
 import PlannerBudget from "./components/planner/PlannerBudget";
 import PlannerMarketplace from "./components/planner/PlannerMarketplace";
 import PlannerInterviews from "./components/planner/PlannerInterviews";
@@ -26,7 +26,7 @@ import PlannerInterviews from "./components/planner/PlannerInterviews";
 // Client pages
 import ClientDashboard from "./components/client/ClientDashboard";
 import ClientWedding from "./components/client/ClientWedding";
-import ClientVendors from "./components/client/ClientVendors";
+
 import ClientBudget from "./components/client/ClientBudget";
 import ClientMarketplace from "./components/client/ClientMarketplace";
 import ClientPaymentApprovals from "./components/client/ClientPaymentApprovals";
@@ -66,7 +66,7 @@ const App = () => (
               <Route path="weddings" element={<PlannerWeddings />} />
               <Route path="clients" element={<PlannerClients />} />
               <Route path="interviews" element={<PlannerInterviews />} />
-              <Route path="vendors" element={<PlannerVendors />} />
+              
               <Route path="marketplace" element={<PlannerMarketplace />} />
               <Route path="budget" element={<PlannerBudget />} />
               <Route path="messages" element={<Messages />} />
@@ -78,7 +78,7 @@ const App = () => (
             <Route path="/client" element={<ProtectedRoute allowedRole="client"><DashboardLayout /></ProtectedRoute>}>
               <Route path="dashboard" element={<ClientDashboard />} />
               <Route path="wedding" element={<ClientWedding />} />
-              <Route path="vendors" element={<ClientVendors />} />
+              
               <Route path="marketplace" element={<ClientMarketplace />} />
               <Route path="budget" element={<ClientBudget />} />
               <Route path="messages" element={<Messages />} />
