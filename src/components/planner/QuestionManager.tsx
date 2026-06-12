@@ -20,7 +20,7 @@ const typeLabels: Record<QuestionType, string> = {
 };
 
 export function QuestionManager() {
-  const { questions, addQuestion, removeQuestion } = useInterviews();
+  const { questions, addQuestion, removeQuestion, seedDefaults } = useInterviews();
   const [text, setText] = useState("");
   const [category, setCategory] = useState("");
   const [type, setType] = useState<QuestionType>("text");
