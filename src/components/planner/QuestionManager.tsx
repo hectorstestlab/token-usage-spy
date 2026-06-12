@@ -20,7 +20,7 @@ const typeLabels: Record<QuestionType, string> = {
 };
 
 export function QuestionManager() {
-  const { questions, addQuestion, removeQuestion } = useInterviews();
+  const { questions, addQuestion, removeQuestion, seedDefaults } = useInterviews();
   const [text, setText] = useState("");
   const [category, setCategory] = useState("");
   const [type, setType] = useState<QuestionType>("text");
@@ -49,6 +49,14 @@ export function QuestionManager() {
 
   return (
     <div className="space-y-6">
+      {questions.length === 0 && (
+        <Card>
+          <CardContent className="p-5 flex items-center justify-between gap-3">
+            <p className="text-sm text-muted-foreground">Aún no tienes preguntas configuradas.</p>
+            <Button variant="outline" onClick={seedDefaults}>Cargar preguntas por defecto</Button>
+          </CardContent>
+        </Card>
+      )}
       <Card>
         <CardHeader>
           <CardTitle className="text-base">Agregar pregunta</CardTitle>

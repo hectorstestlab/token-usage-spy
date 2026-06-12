@@ -11,13 +11,7 @@ import { NewTaskDialog } from "@/components/shared/EntityDialogs";
 
 type DrillKey = "weddings" | "clients" | "budget" | "messages" | "wedding-detail" | null;
 
-const mockMessages = [
-  { from: "Sara y Miguel", preview: "¿Podemos revisar el menú?", urgent: true, time: "10:30" },
-  { from: "Emma y Jaime", preview: "Confirmamos el lugar", urgent: true, time: "09:15" },
-  { from: "Florista Pétalos", preview: "Cotización lista", urgent: false, time: "Ayer" },
-  { from: "Olivia y David", preview: "Gracias por la propuesta", urgent: false, time: "Ayer" },
-  { from: "Sofía y Liam", preview: "¿Cuándo nos vemos?", urgent: false, time: "2d" },
-];
+const mockMessages: { from: string; preview: string; urgent: boolean; time: string }[] = [];
 
 export default function PlannerDashboard() {
   const { weddings, clients, tasks, budget, toggleTask } = useEntities();

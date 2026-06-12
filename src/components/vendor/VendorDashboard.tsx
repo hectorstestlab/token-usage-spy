@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { CalendarCheck, DollarSign, Users, TrendingUp, ChevronRight } from "lucide-react";
 import { useEntities } from "@/contexts/EntitiesContext";
 import DrillDownDialog from "@/components/shared/DrillDownDialog";
+import { JoinWeddingDialog } from "@/components/shared/EntityDialogs";
 
 type DrillKey = "bookings" | "revenue" | "inquiries" | "rating" | "booking-detail" | null;
 
@@ -45,9 +46,12 @@ export default function VendorDashboard() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold text-foreground">Panel del Proveedor</h1>
-        <p className="text-muted-foreground">Tu negocio de un vistazo</p>
+      <div className="flex items-start justify-between gap-3 flex-wrap">
+        <div>
+          <h1 className="text-2xl font-bold text-foreground">Panel del Proveedor</h1>
+          <p className="text-muted-foreground">Tu negocio de un vistazo</p>
+        </div>
+        <JoinWeddingDialog asRole="vendor" />
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">

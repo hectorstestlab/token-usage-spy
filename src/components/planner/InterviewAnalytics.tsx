@@ -10,12 +10,17 @@ export function InterviewAnalytics() {
   const { questions, interviews } = useInterviews();
   const completed = interviews.filter((i) => i.status === "Completada");
 
+  const findQuestionId = (predicate: (text: string) => boolean) =>
+    questions.find((q) => predicate(q.text.toLowerCase()))?.id;
+  const budgetQid = findQuestionId((t) => t.includes("presupuesto"));
+  const guestsQid = findQuestionId((t) => t.includes("invitados"));
+
   const stats = useMemo(() => {
     const budgets = completed
-      .map((i) => Number(i.answers.find((a) => a.questionId === "q-budget")?.value))
+      .map((i) => Number(i.answers.find((a) => a.questionId === budgetQid)?.value))
       .filter((n) => !isNaN(n) && n > 0);
     const guests = completed
-      .map((i) => Number(i.answers.find((a) => a.questionId === "q-guests")?.value))
+      .map((i) => Number(i.answers.find((a) => a.questionId === guestsQid)?.value))
       .filter((n) => !isNaN(n) && n > 0);
     const avg = (arr: number[]) => (arr.length ? arr.reduce((a, b) => a + b, 0) / arr.length : 0);
     return {
@@ -24,7 +29,7 @@ export function InterviewAnalytics() {
       avgBudget: avg(budgets),
       avgGuests: avg(guests),
     };
-  }, [interviews, completed]);
+  }, [interviews, completed, budgetQid, guestsQid]);
 
   const choiceData = useMemo(() => {
     return questions

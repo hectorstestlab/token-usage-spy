@@ -159,13 +159,16 @@ function ListView() {
     <div className="grid gap-4">
       {weddings.map((w) => (
         <Card key={w.id} className="hover:shadow-md transition-shadow cursor-pointer">
-          <CardContent className="p-5 flex items-center gap-6">
-            <div className="flex-1">
+          <CardContent className="p-5 flex items-center gap-6 flex-wrap">
+            <div className="flex-1 min-w-[180px]">
               <h3 className="font-semibold text-foreground">{w.couple}</h3>
               <p className="text-sm text-muted-foreground">{w.date} · {w.venue}</p>
             </div>
             <div className="text-sm text-muted-foreground hidden md:block">{w.guests} invitados</div>
             <div className="text-sm font-medium text-foreground hidden md:block">{w.budget}</div>
+            {w.inviteCode && (
+              <Badge variant="outline" className="font-mono">Código: {w.inviteCode}</Badge>
+            )}
             <Badge variant={w.status === "Requiere Atención" ? "destructive" : "secondary"}>{w.status}</Badge>
           </CardContent>
         </Card>
