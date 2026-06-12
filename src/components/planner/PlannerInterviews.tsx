@@ -18,12 +18,12 @@ function NewInterviewDialog({ onCreated }: { onCreated: (i: Interview) => void }
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
 
-  const handleCreate = () => {
+  const handleCreate = async () => {
     if (!name.trim()) return;
-    const i = createInterview(name.trim().slice(0, 100));
+    const i = await createInterview(name.trim().slice(0, 100));
     setOpen(false);
     setName("");
-    onCreated(i);
+    if (i) onCreated(i);
   };
 
   return (
