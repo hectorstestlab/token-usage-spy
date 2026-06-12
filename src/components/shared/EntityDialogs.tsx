@@ -5,9 +5,9 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { useEntities, Wedding, Client, Vendor, Task, BudgetCategory, VendorService, VendorBooking } from "@/contexts/EntitiesContext";
+import { useEntities, Wedding, BudgetCategory, VendorBooking } from "@/contexts/EntitiesContext";
 import { toast } from "sonner";
-import { Plus } from "lucide-react";
+import { Plus, KeyRound } from "lucide-react";
 
 function CreateButton({ children, onClick }: { children: ReactNode; onClick?: () => void }) {
   return (
@@ -34,13 +34,16 @@ export function NewWeddingDialog({ trigger }: BaseDialogProps) {
   const [guests, setGuests] = useState(100);
   const [budget, setBudget] = useState("");
   const [status, setStatus] = useState<Wedding["status"]>("Planificando");
+  const [submitting, setSubmitting] = useState(false);
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!couple || !date || !venue) return;
+    setSubmitting(true);
     const dateObj = new Date(date);
     const formatted = dateObj.toLocaleDateString("es-ES", { day: "numeric", month: "short", year: "numeric" });
-    addWedding({ couple, date: formatted, dateObj, venue, guests, budget: budget || "$0", status, progress: 0 });
+    await addWedding({ couple, date: formatted, dateObj, venue, guests, budget: budget || "$0", status, progress: 0 });
+    setSubmitting(false);
     toast.success("Boda creada");
     setOpen(false);
     setCouple(""); setDate(""); setVenue(""); setGuests(100); setBudget(""); setStatus("Planificando");
@@ -76,43 +79,47 @@ export function NewWeddingDialog({ trigger }: BaseDialogProps) {
               </Select>
             </div>
           </div>
-          <DialogFooter><Button type="submit">Crear</Button></DialogFooter>
+          <DialogFooter><Button type="submit" disabled={submitting}>Crear</Button></DialogFooter>
         </form>
       </DialogContent>
     </Dialog>
   );
 }
 
-/* ------------------------- CLIENT ------------------------- */
+/* ------------------------- CLIENT (info-only) ------------------------- */
 export function NewClientDialog({ trigger }: BaseDialogProps) {
-  const { addClient } = useEntities();
+  const { weddings } = useEntities();
   const [open, setOpen] = useState(false);
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [wedding, setWedding] = useState("");
-
-  const submit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!name) return;
-    addClient({ name, email, phone, wedding, status: "Nuevo" });
-    toast.success("Cliente agregado");
-    setOpen(false);
-    setName(""); setEmail(""); setPhone(""); setWedding("");
-  };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>{trigger ?? <CreateButton>Nuevo Cliente</CreateButton>}</DialogTrigger>
+      <DialogTrigger asChild>{trigger ?? <CreateButton>Invitar Pareja</CreateButton>}</DialogTrigger>
       <DialogContent>
-        <DialogHeader><DialogTitle>Nuevo Cliente</DialogTitle></DialogHeader>
-        <form onSubmit={submit} className="space-y-4">
-          <div className="space-y-2"><Label>Nombre de la pareja</Label><Input value={name} onChange={(e) => setName(e.target.value)} required /></div>
-          <div className="space-y-2"><Label>Email</Label><Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} /></div>
-          <div className="space-y-2"><Label>Teléfono</Label><Input value={phone} onChange={(e) => setPhone(e.target.value)} /></div>
-          <div className="space-y-2"><Label>Fecha de boda</Label><Input value={wedding} onChange={(e) => setWedding(e.target.value)} placeholder="15 Abr, 2026" /></div>
-          <DialogFooter><Button type="submit">Agregar</Button></DialogFooter>
-        </form>
+        <DialogHeader>
+          <DialogTitle>Invitar pareja a una boda</DialogTitle>
+          <DialogDescription>
+            Comparte el código de invitación con la pareja. Al registrarse como "Pareja", podrán ingresarlo para unirse.
+          </DialogDescription>
+        </DialogHeader>
+        <div className="space-y-3">
+          {weddings.length === 0 && (
+            <p className="text-sm text-muted-foreground">Crea primero una boda para generar su código de invitación.</p>
+          )}
+          {weddings.map((w) => (
+            <div key={w.id} className="flex items-center justify-between p-3 rounded-lg border border-border">
+              <div>
+                <p className="font-medium text-foreground">{w.couple}</p>
+                <p className="text-xs text-muted-foreground">{w.date}</p>
+              </div>
+              <button
+                onClick={() => { navigator.clipboard.writeText(w.inviteCode ?? ""); toast.success("Código copiado"); }}
+                className="flex items-center gap-2 px-3 py-1.5 rounded-md bg-muted/50 hover:bg-muted font-mono text-sm"
+              >
+                <KeyRound className="h-3.5 w-3.5" /> {w.inviteCode}
+              </button>
+            </div>
+          ))}
+        </div>
       </DialogContent>
     </Dialog>
   );
@@ -125,10 +132,10 @@ export function NewVendorDialog({ trigger }: BaseDialogProps) {
   const [name, setName] = useState("");
   const [category, setCategory] = useState("");
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name) return;
-    addVendor({ name, category, rating: 0, bookings: 0, status: "Nuevo" });
+    await addVendor({ name, category, rating: 0, bookings: 0, status: "Nuevo" });
     toast.success("Proveedor agregado");
     setOpen(false);
     setName(""); setCategory("");
@@ -151,19 +158,20 @@ export function NewVendorDialog({ trigger }: BaseDialogProps) {
 
 /* ------------------------- TASK ------------------------- */
 export function NewTaskDialog({ trigger }: BaseDialogProps) {
-  const { addTask } = useEntities();
+  const { addTask, weddings } = useEntities();
   const [open, setOpen] = useState(false);
   const [text, setText] = useState("");
   const [due, setDue] = useState("");
   const [urgent, setUrgent] = useState(false);
+  const [weddingId, setWeddingId] = useState<string>("");
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!text) return;
-    addTask({ text, due: due || "Sin fecha", urgent, done: false });
+    await addTask({ text, due: due || "Sin fecha", urgent, done: false, weddingId: weddingId || weddings[0]?.id });
     toast.success("Tarea creada");
     setOpen(false);
-    setText(""); setDue(""); setUrgent(false);
+    setText(""); setDue(""); setUrgent(false); setWeddingId("");
   };
 
   return (
@@ -173,7 +181,18 @@ export function NewTaskDialog({ trigger }: BaseDialogProps) {
         <DialogHeader><DialogTitle>Nueva Tarea</DialogTitle></DialogHeader>
         <form onSubmit={submit} className="space-y-4">
           <div className="space-y-2"><Label>Descripción</Label><Textarea value={text} onChange={(e) => setText(e.target.value)} required /></div>
-          <div className="space-y-2"><Label>Vence</Label><Input value={due} onChange={(e) => setDue(e.target.value)} placeholder="Hoy, Mañana, 25 Mar" /></div>
+          <div className="space-y-2"><Label>Vence</Label><Input type="date" value={due} onChange={(e) => setDue(e.target.value)} /></div>
+          {weddings.length > 1 && (
+            <div className="space-y-2">
+              <Label>Boda</Label>
+              <Select value={weddingId || weddings[0]?.id} onValueChange={setWeddingId}>
+                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  {weddings.map((w) => <SelectItem key={w.id} value={w.id}>{w.couple}</SelectItem>)}
+                </SelectContent>
+              </Select>
+            </div>
+          )}
           <div className="flex items-center gap-2">
             <input id="urgent" type="checkbox" checked={urgent} onChange={(e) => setUrgent(e.target.checked)} className="rounded border-input" />
             <Label htmlFor="urgent" className="cursor-pointer">Urgente</Label>
@@ -187,19 +206,20 @@ export function NewTaskDialog({ trigger }: BaseDialogProps) {
 
 /* ------------------------- BUDGET CATEGORY ------------------------- */
 export function NewBudgetCategoryDialog({ scope, trigger }: BaseDialogProps & { scope: BudgetCategory["scope"] }) {
-  const { addBudgetCategory } = useEntities();
+  const { addBudgetCategory, weddings } = useEntities();
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [allocated, setAllocated] = useState(0);
   const [spent, setSpent] = useState(0);
+  const [weddingId, setWeddingId] = useState<string>("");
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name) return;
-    addBudgetCategory({ name, allocated, spent, scope });
+    await addBudgetCategory({ name, allocated, spent, scope, weddingId: weddingId || weddings[0]?.id });
     toast.success("Categoría agregada");
     setOpen(false);
-    setName(""); setAllocated(0); setSpent(0);
+    setName(""); setAllocated(0); setSpent(0); setWeddingId("");
   };
 
   return (
@@ -213,6 +233,17 @@ export function NewBudgetCategoryDialog({ scope, trigger }: BaseDialogProps & { 
             <div className="space-y-2"><Label>Asignado ($)</Label><Input type="number" value={allocated} onChange={(e) => setAllocated(Number(e.target.value))} /></div>
             <div className="space-y-2"><Label>Gastado ($)</Label><Input type="number" value={spent} onChange={(e) => setSpent(Number(e.target.value))} /></div>
           </div>
+          {weddings.length > 1 && (
+            <div className="space-y-2">
+              <Label>Boda</Label>
+              <Select value={weddingId || weddings[0]?.id} onValueChange={setWeddingId}>
+                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  {weddings.map((w) => <SelectItem key={w.id} value={w.id}>{w.couple}</SelectItem>)}
+                </SelectContent>
+              </Select>
+            </div>
+          )}
           <DialogFooter><Button type="submit">Agregar</Button></DialogFooter>
         </form>
       </DialogContent>
@@ -228,10 +259,10 @@ export function NewServiceDialog({ trigger }: BaseDialogProps) {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name) return;
-    addService({ name, description, price: price || "$0", active: true });
+    await addService({ name, description, price: price || "$0", active: true });
     toast.success("Servicio agregado");
     setOpen(false);
     setName(""); setDescription(""); setPrice("");
@@ -263,10 +294,10 @@ export function NewBookingDialog({ trigger }: BaseDialogProps) {
   const [amount, setAmount] = useState("");
   const [status, setStatus] = useState<VendorBooking["status"]>("Consulta");
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!client) return;
-    addBooking({ client, date, venue, amount: amount || "Por definir", status });
+    await addBooking({ client, date, venue, amount: amount || "Por definir", status });
     toast.success("Reserva creada");
     setOpen(false);
     setClient(""); setDate(""); setVenue(""); setAmount(""); setStatus("Consulta");
@@ -280,7 +311,7 @@ export function NewBookingDialog({ trigger }: BaseDialogProps) {
         <form onSubmit={submit} className="space-y-4">
           <div className="space-y-2"><Label>Cliente</Label><Input value={client} onChange={(e) => setClient(e.target.value)} required /></div>
           <div className="grid grid-cols-2 gap-3">
-            <div className="space-y-2"><Label>Fecha</Label><Input value={date} onChange={(e) => setDate(e.target.value)} placeholder="15 Abr, 2026" /></div>
+            <div className="space-y-2"><Label>Fecha</Label><Input type="date" value={date} onChange={(e) => setDate(e.target.value)} /></div>
             <div className="space-y-2"><Label>Monto</Label><Input value={amount} onChange={(e) => setAmount(e.target.value)} placeholder="$3,200" /></div>
           </div>
           <div className="space-y-2"><Label>Lugar</Label><Input value={venue} onChange={(e) => setVenue(e.target.value)} /></div>
@@ -296,6 +327,42 @@ export function NewBookingDialog({ trigger }: BaseDialogProps) {
             </Select>
           </div>
           <DialogFooter><Button type="submit">Crear</Button></DialogFooter>
+        </form>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+/* ------------------------- JOIN WEDDING ------------------------- */
+export function JoinWeddingDialog({ asRole, trigger }: BaseDialogProps & { asRole: "client" | "vendor" }) {
+  const { joinWeddingByCode } = useEntities();
+  const [open, setOpen] = useState(false);
+  const [code, setCode] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+
+  const submit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!code.trim()) return;
+    setSubmitting(true);
+    const ok = await joinWeddingByCode(code.trim().toUpperCase(), asRole);
+    setSubmitting(false);
+    if (ok) { setOpen(false); setCode(""); }
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>{trigger ?? <Button><KeyRound className="h-4 w-4 mr-1" /> Unirse a una boda</Button>}</DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Unirse a una boda</DialogTitle>
+          <DialogDescription>Pide a tu wedding planner el código de invitación de tu boda.</DialogDescription>
+        </DialogHeader>
+        <form onSubmit={submit} className="space-y-4">
+          <div className="space-y-2">
+            <Label>Código</Label>
+            <Input value={code} onChange={(e) => setCode(e.target.value.toUpperCase())} placeholder="ABC123" maxLength={6} className="font-mono uppercase tracking-widest" />
+          </div>
+          <DialogFooter><Button type="submit" disabled={submitting}>Unirme</Button></DialogFooter>
         </form>
       </DialogContent>
     </Dialog>
