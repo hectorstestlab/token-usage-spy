@@ -1,62 +1,70 @@
+import { useEffect, useState, useCallback } from "react";
 import { Card, CardContent } from "@/components/ui/card";
+import { Heart, Store } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { useEntities } from "@/contexts/EntitiesContext";
+import { JoinWeddingDialog } from "@/components/shared/EntityDialogs";
 import { Badge } from "@/components/ui/badge";
-import { Star } from "lucide-react";
-
-const booked = [
-  { name: "Flores y Pétalos", category: "Florista", rating: 4.9, price: "$3,200", status: "Confirmado" },
-  { name: "Captura Momentos Fotografía", category: "Fotógrafo", rating: 4.8, price: "$5,500", status: "Confirmado" },
-  { name: "Celebraciones Gourmet", category: "Catering", rating: 4.7, price: "$12,000", status: "Depósito Pagado" },
-];
-
-const marketplace = [
-  { name: "Cuerdas Armónicas", category: "Entretenimiento", rating: 4.6, price: "Desde $2,000" },
-  { name: "Dulces Capas Pastelería", category: "Pastel y Postres", rating: 4.9, price: "Desde $800" },
-  { name: "Decoración Elegante", category: "Decoración", rating: 4.5, price: "Desde $1,500" },
-  { name: "Limusinas de Lujo", category: "Transporte", rating: 4.4, price: "Desde $600" },
-];
 
 export default function ClientVendors() {
+  const { weddings } = useEntities();
+  const wedding = weddings[0];
+  const [vendorNames, setVendorNames] = useState<{ id: string; name: string }[]>([]);
+
+  const fetchVendors = useCallback(async () => {
+    if (!wedding) return;
+    const { data: members } = await supabase
+      .from("wedding_members")
+      .select("user_id")
+      .eq("wedding_id", wedding.id)
+      .eq("member_role", "vendor");
+    const ids = (members ?? []).map((m: any) => m.user_id);
+    if (!ids.length) { setVendorNames([]); return; }
+    const { data: profs } = await supabase.from("profiles").select("id, full_name").in("id", ids);
+    setVendorNames((profs ?? []).map((p: any) => ({ id: p.id, name: p.full_name ?? "Proveedor" })));
+  }, [wedding]);
+
+  useEffect(() => { fetchVendors(); }, [fetchVendors]);
+
+  if (!wedding) {
+    return (
+      <div className="space-y-6">
+        <h1 className="text-2xl font-bold text-foreground">Proveedores</h1>
+        <Card><CardContent className="p-8 text-center space-y-4">
+          <Heart className="h-10 w-10 text-primary mx-auto" />
+          <p className="text-muted-foreground">Únete a una boda primero.</p>
+          <JoinWeddingDialog asRole="client" />
+        </CardContent></Card>
+      </div>
+    );
+  }
+
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold text-foreground">Proveedores</h1>
-        <p className="text-muted-foreground">Tus proveedores reservados y marketplace</p>
+        <p className="text-muted-foreground">Proveedores asignados a tu boda</p>
       </div>
 
-      <div>
-        <h2 className="text-lg font-semibold text-foreground mb-4">Proveedores Reservados</h2>
-        <div className="grid gap-4">
-          {booked.map((v) => (
-            <Card key={v.name}>
-              <CardContent className="p-5 flex items-center gap-4">
-                <div className="flex-1">
-                  <h3 className="font-semibold text-foreground">{v.name}</h3>
-                  <p className="text-sm text-muted-foreground">{v.category}</p>
-                </div>
-                <span className="text-sm font-medium text-foreground">{v.price}</span>
-                <Badge>{v.status}</Badge>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </div>
-
-      <div>
-        <h2 className="text-lg font-semibold text-foreground mb-4">Explorar Marketplace</h2>
-        <div className="grid sm:grid-cols-2 gap-4">
-          {marketplace.map((v) => (
-            <Card key={v.name} className="cursor-pointer hover:shadow-md transition-shadow">
-              <CardContent className="p-5 space-y-2">
-                <h3 className="font-semibold text-foreground">{v.name}</h3>
-                <p className="text-sm text-muted-foreground">{v.category}</p>
-                <div className="flex items-center justify-between">
-                  <span className="flex items-center gap-1 text-sm"><Star className="h-3.5 w-3.5 text-wedding-gold fill-wedding-gold" />{v.rating}</span>
-                  <span className="text-sm text-muted-foreground">{v.price}</span>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+      <div className="grid gap-3">
+        {vendorNames.length === 0 && (
+          <Card><CardContent className="p-6 text-sm text-muted-foreground">
+            Tu planner aún no ha vinculado proveedores. Pídeles que compartan el código de invitación con cada proveedor.
+          </CardContent></Card>
+        )}
+        {vendorNames.map((v) => (
+          <Card key={v.id}>
+            <CardContent className="p-5 flex items-center gap-3">
+              <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
+                <Store className="h-5 w-5 text-primary" />
+              </div>
+              <div className="flex-1">
+                <p className="font-semibold text-foreground">{v.name}</p>
+              </div>
+              <Badge variant="secondary">Vinculado</Badge>
+            </CardContent>
+          </Card>
+        ))}
       </div>
     </div>
   );

@@ -1,75 +1,57 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { CalendarDays, MapPin, Users, Clock } from "lucide-react";
-
-const timeline = [
-  { time: "2:00 PM", event: "Llegada de invitados y cóctel de bienvenida" },
-  { time: "3:00 PM", event: "Comienza la ceremonia" },
-  { time: "3:45 PM", event: "Hora del cóctel" },
-  { time: "5:00 PM", event: "Recepción y cena" },
-  { time: "7:00 PM", event: "Primer baile y discursos" },
-  { time: "8:00 PM", event: "Fiesta y baile" },
-  { time: "11:00 PM", event: "Despedida con bengalas" },
-];
+import { Card, CardContent } from "@/components/ui/card";
+import { CalendarDays, MapPin, Users, Heart } from "lucide-react";
+import { useEntities } from "@/contexts/EntitiesContext";
+import { JoinWeddingDialog } from "@/components/shared/EntityDialogs";
 
 export default function ClientWedding() {
+  const { weddings } = useEntities();
+  const wedding = weddings[0];
+
+  if (!wedding) {
+    return (
+      <div className="space-y-6">
+        <div>
+          <h1 className="text-2xl font-bold text-foreground">Mi Boda</h1>
+          <p className="text-muted-foreground">Aún no estás vinculada(o) a ninguna boda</p>
+        </div>
+        <Card>
+          <CardContent className="p-8 text-center space-y-4">
+            <Heart className="h-10 w-10 text-primary mx-auto" />
+            <p className="text-muted-foreground">Pide a tu planner el código de invitación.</p>
+            <JoinWeddingDialog asRole="client" />
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold text-foreground">Mi Boda</h1>
-        <p className="text-muted-foreground">Los detalles de tu gran día</p>
+        <p className="text-muted-foreground">{wedding.couple}</p>
       </div>
 
       <div className="grid sm:grid-cols-3 gap-4">
-        <Card>
-          <CardContent className="p-5 flex items-center gap-3">
-            <CalendarDays className="h-5 w-5 text-primary" />
-            <div>
-              <p className="text-sm text-muted-foreground">Fecha</p>
-              <p className="font-semibold text-foreground">15 de Abril, 2026</p>
-            </div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="p-5 flex items-center gap-3">
-            <MapPin className="h-5 w-5 text-primary" />
-            <div>
-              <p className="text-sm text-muted-foreground">Lugar</p>
-              <p className="font-semibold text-foreground">Jardín de Rosas</p>
-            </div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="p-5 flex items-center gap-3">
-            <Users className="h-5 w-5 text-primary" />
-            <div>
-              <p className="text-sm text-muted-foreground">Invitados</p>
-              <p className="font-semibold text-foreground">150 invitados · 128 confirmados</p>
-            </div>
-          </CardContent>
-        </Card>
+        <Card><CardContent className="p-5 flex items-center gap-3">
+          <CalendarDays className="h-5 w-5 text-primary" />
+          <div><p className="text-sm text-muted-foreground">Fecha</p><p className="font-semibold text-foreground">{wedding.date}</p></div>
+        </CardContent></Card>
+        <Card><CardContent className="p-5 flex items-center gap-3">
+          <MapPin className="h-5 w-5 text-primary" />
+          <div><p className="text-sm text-muted-foreground">Lugar</p><p className="font-semibold text-foreground">{wedding.venue}</p></div>
+        </CardContent></Card>
+        <Card><CardContent className="p-5 flex items-center gap-3">
+          <Users className="h-5 w-5 text-primary" />
+          <div><p className="text-sm text-muted-foreground">Invitados</p><p className="font-semibold text-foreground">{wedding.guests}</p></div>
+        </CardContent></Card>
       </div>
 
       <Card>
-        <CardHeader>
-          <CardTitle>Cronograma del Día</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {timeline.map((t, i) => (
-              <div key={i} className="flex items-start gap-4">
-                <div className="flex flex-col items-center">
-                  <div className="h-3 w-3 rounded-full bg-primary" />
-                  {i < timeline.length - 1 && <div className="w-px h-8 bg-border" />}
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-foreground">{t.event}</p>
-                  <p className="text-xs text-muted-foreground flex items-center gap-1">
-                    <Clock className="h-3 w-3" />{t.time}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
+        <CardContent className="p-6">
+          <p className="text-sm text-muted-foreground">Estado de la planificación</p>
+          <p className="text-xl font-semibold text-foreground mt-1">{wedding.status}</p>
+          <p className="text-xs text-muted-foreground mt-2">Progreso: {wedding.progress}%</p>
         </CardContent>
       </Card>
     </div>
