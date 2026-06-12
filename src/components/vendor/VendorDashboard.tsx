@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { CalendarCheck, DollarSign, Users, TrendingUp, ChevronRight } from "lucide-react";
 import { useEntities } from "@/contexts/EntitiesContext";
 import DrillDownDialog from "@/components/shared/DrillDownDialog";
+import { JoinWeddingDialog } from "@/components/shared/EntityDialogs";
 
 type DrillKey = "bookings" | "revenue" | "inquiries" | "rating" | "booking-detail" | null;
 
